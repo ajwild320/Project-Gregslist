@@ -1,7 +1,53 @@
 {% extends '_layout.html' %}
 
-{% block title %}Contact us page{% endblock %}
+{% block title %}
+    Contact us page
+{% endblock %}
+
+{% block content %}
+    <h1 style="font-size: 60px;">Contact Us</h1> 
+{% endblock %}
 
 {% block body %}
-<h1>Contact Us</h1>
+    <h1>Reach Out</h1>
+
+    <form>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Username</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Username">
+        </div>
+        
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="Question">
+            <label class="form-check-label" for="Question">
+              Question
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="Comment">
+            <label class="form-check-label" for="Comment">
+              Comment
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="Concern">
+            <label class="form-check-label" for="Concern">
+              Concern
+            </label>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Message</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+      <p1>
+        We can also be reached at: <br>
+        123 Ave, Huntersville, NC 28078 <br>
+        gregslist@gmail.com <br>
+        704.555.1234 <br>
+      </p1>
 {% endblock %}
