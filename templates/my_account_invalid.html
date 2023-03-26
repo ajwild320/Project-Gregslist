@@ -1,0 +1,35 @@
+{% extends '_layout.html' %}
+
+{% block title %}
+    My Account Invalid Page
+{% endblock %}
+
+{% block content %}
+    <h1 style="font-size: 60px;">My Account</h1> 
+{% endblock %}
+
+{% block body %}
+    <p1>
+        Please login with your existing credentials to view your data <br>
+        OR <br>
+        Create an account if you are a new user <br>
+    </p1>
+
+    <h1>Sign In</h1>
+    
+    <form>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Username</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Password</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <h1>Sign Up Here</h1>
+    <a href="/sign_up" class="btn btn-primary" role="button" aria-disabled="true">Sign Up</a>
+
+{% endblock %}

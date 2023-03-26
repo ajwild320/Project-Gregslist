@@ -1,0 +1,30 @@
+{% extends '_layout.html' %}
+
+{% block title %}
+    My Account Page
+{% endblock %}
+
+{% block content %}
+    <h1 style="font-size: 60px;">My Account</h1>
+{% endblock %}
+
+{% block body %}
+    <h1>Hello {{first_name}}</h1>
+
+    <h2>First Name:</h2>
+    <h3>{{first_name}}</h3>
+
+    <h2>Last Name:</h2>
+    <h3>{{last_name}}</h3>
+
+    <h2>Username:</h2>
+    <h3>{{username}}</h3>
+  
+    <h2>Password:</h2>
+    <h3>{{password}}</h3>
+  
+    <h2>Email:</h2>
+    <h3>{{email}}</h3>
+
+    <button type="submit" class="btn btn-danger">Deactivate Account</button>
+{% endblock %}
