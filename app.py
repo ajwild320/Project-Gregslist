@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-
+from datetime import datetime
 app = Flask(__name__)
 
 @app.get('/')
@@ -24,6 +24,14 @@ def my_account_invalid():
 #retrieve from when a user is created
 @app.get('/my_account')
 def my_account():
+    hour = datetime.now().hour
+    if hour < 11:
+        time_of_day = "Morning"
+    elif hour >= 11 and hour < 17:
+        time_of_day = "Afternoon"
+    else:
+        time_of_day = "Evening"
+
     first_name = "a"
     first_name = first_name.title()
     last_name = "b"
@@ -31,7 +39,7 @@ def my_account():
     username = "c"
     password = "d"
     email = "e"
-    return render_template('my_account.html', first_name = first_name, last_name = last_name, username = username, password = password, email = email)
+    return render_template('my_account.html', first_name = first_name, last_name = last_name, username = username, password = password, email = email, time_of_day = time_of_day)
 
 #TODO
 #fix the return once page is made
