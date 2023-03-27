@@ -46,3 +46,8 @@ def my_account():
 @app.get('/sign_in')
 def sign_in(username, password):
     return render_template('home.html')
+
+#once database is created, use the username to delete from database
+@app.get('/deactivate_account')
+def deactivate_account():
+    return render_template('deactivate_account.html')
