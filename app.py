@@ -19,6 +19,7 @@ def contact_us():
 #with the new information learned in class on 3/28/2023 we should be able to create
 #and populate the database with the new information needed to implement the sign in
 #feature
+
 @app.get('/my_account_invalid')
 def my_account_invalid():
     username = request.form.get('username')
