@@ -9,6 +9,32 @@
   <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+  {% block content %} {% endblock %}
+
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <a class="navbar-brand" href="/">Gregslist</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="listings.html">Listings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="my_account.html">My Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="new_user.html">New User</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact_us">Contact Us</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
   <div class="container pt-4">
     {% block body %}{% endblock %}
   </div>
