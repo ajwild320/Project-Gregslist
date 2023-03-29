@@ -15,6 +15,7 @@ def contact_us():
 
 #TODO
 #needs to be finished once the sign in is completed and we know where to redirect to
+
 #with the new information learned in class on 3/28/2023 we should be able to create
 #and populate the database with the new information needed to implement the sign in
 #feature
@@ -26,6 +27,8 @@ def my_account_invalid():
 
 #TODO
 #retrieve from when a user is created
+
+#can use database to check if a user exists
 @app.get('/my_account')
 def my_account():
     hour = datetime.now().hour
@@ -53,6 +56,8 @@ def sign_in(username, password):
 
 #TODO
 #once database is created, use the username to delete from database
+
+# can also assign ID's to each user account and delete them via ID
 @app.get('/deactivate_account')
 def deactivate_account():
     return render_template('deactivate_account.html')
