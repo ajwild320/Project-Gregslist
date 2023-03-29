@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from datetime import datetime
+
 app = Flask(__name__)
 
 @app.get('/')
@@ -47,7 +48,20 @@ def my_account():
 def sign_in(username, password):
     return render_template('home.html')
 
+#TODO
 #once database is created, use the username to delete from database
 @app.get('/deactivate_account')
 def deactivate_account():
     return render_template('deactivate_account.html')
+
+#TODO
+#will need to implement how to send this data to an email
+@app.get('/report_post')
+def report_post():     
+    return render_template('report_post.html')
+
+#TODO
+#need to update once it is figured out how to send a form via email
+@app.post('/report_post_email')
+def report_post_email():
+    return render_template('home.html')

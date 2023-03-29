@@ -1,0 +1,20 @@
+{% extends '_layout.html' %}
+
+{% block title %}
+    Report post page
+{% endblock %}
+
+{% block content %}
+    <h1 style="font-size: 60px;">Report Post</h1> 
+{% endblock %}
+
+{% block body %}
+    <form method="post" action="/report_post_email">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Reason for reporting:</label>
+            <textarea class="form-control" id="Reason" rows="5"></textarea>
+          </div>
+  
+          <button type="submit" class="btn btn-primary" id="button">Submit</button>
+    </form>
+{% endblock %}
