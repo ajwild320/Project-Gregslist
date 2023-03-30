@@ -73,3 +73,5 @@ def report_post():
 @app.post('/report_post_email')
 def report_post_email():
     return render_template('home.html')
+
+#NOTE need to add a connection between flask and html form following the week of 3/29/23
