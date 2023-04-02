@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, redirect
 from datetime import datetime
 
+from email.message import EmailMessage
+import ssl
+import smtplib 
+
 app = Flask(__name__)
 
 @app.get('/')
@@ -15,6 +19,10 @@ def contact_us():
 
 #TODO
 #needs to be finished once the sign in is completed and we know where to redirect to
+
+#with the new information learned in class on 3/28/2023 we should be able to create
+#and populate the database with the new information needed to implement the sign in
+#feature
 @app.get('/my_account_invalid')
 def my_account_invalid():
     username = request.form.get('username')
@@ -23,6 +31,8 @@ def my_account_invalid():
 
 #TODO
 #retrieve from when a user is created
+
+#can use database to check if a user exists
 @app.get('/my_account')
 def my_account():
     hour = datetime.now().hour
@@ -50,12 +60,12 @@ def sign_in(username, password):
 
 #TODO
 #once database is created, use the username to delete from database
+
+# can also assign ID's to each user account and delete them via ID
 @app.get('/deactivate_account')
 def deactivate_account():
     return render_template('deactivate_account.html')
 
-#TODO
-#will need to implement how to send this data to an email
 @app.get('/report_post')
 def report_post():     
     return render_template('report_post.html')
@@ -64,4 +74,24 @@ def report_post():
 #need to update once it is figured out how to send a form via email
 @app.post('/report_post_email')
 def report_post_email():
-    return render_template('home.html')
+    email_sender = 'gregslist.customer.service@gmail.com'
+    email_password = 'qcjzwfmmyaekkcgt' #generated from google app passwords
+    email_reciever = 'gregslist.customer.service@gmail.com'
+    subject = "Report Post"
+    body = request.form.get('reason')
+        
+    em = EmailMessage()
+    em['From'] = email_sender
+    em['To'] = email_reciever
+    em['Subject'] = subject
+    em.set_content(body)
+    
+
+    context = ssl.create_default_context()
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+        smtp.login(email_sender, email_password)
+        smtp.sendmail(email_sender, email_reciever, em.as_string())
+    
+    return body
+
