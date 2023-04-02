@@ -1,9 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from datetime import datetime
-
 from email.message import EmailMessage
-import ssl
-import smtplib 
+import ssl, smtplib 
 
 app = Flask(__name__)
 
@@ -74,24 +72,25 @@ def report_post():
 #need to update once it is figured out how to send a form via email
 @app.post('/report_post_email')
 def report_post_email():
+    subject = "Report Post"
+    body = request.form.get('reason')
+    email(subject, body)
+    return "sent"
+
+def email(subject, body):
     email_sender = 'gregslist.customer.service@gmail.com'
     email_password = 'qcjzwfmmyaekkcgt' #generated from google app passwords
     email_reciever = 'gregslist.customer.service@gmail.com'
     subject = "Report Post"
-    body = request.form.get('reason')
+    text = str(body)
         
     em = EmailMessage()
     em['From'] = email_sender
     em['To'] = email_reciever
     em['Subject'] = subject
-    em.set_content(body)
-    
+    em.set_content(text)
 
     context = ssl.create_default_context()
-
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
         smtp.login(email_sender, email_password)
         smtp.sendmail(email_sender, email_reciever, em.as_string())
-    
-    return body
-
