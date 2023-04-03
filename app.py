@@ -76,10 +76,10 @@ def report_post():
     return render_template('report_post.html')
 
 #TODO
-#need to update once it is figured out how to send a form via email
+#update to take sender and cc as user, return an error page if doesnt work
 @app.post('/report_post_email')
 def report_post_email():
-    msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com'])
+    msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', cc = ['gregslist.customer.service@gmail.com'], recipients = ['gregslist.customer.service@gmail.com'])
     msg.body = request.form.get("reason")
     mail.send(msg)
-    return "Sent"
+    return render_template('home.html')
