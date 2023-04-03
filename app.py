@@ -80,6 +80,6 @@ def report_post():
 @app.post('/report_post_email')
 def report_post_email():
     msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com'])
-    msg.body = request.form.get('reason')
+    msg.body = request.form.get("reason")
     mail.send(msg)
     return "Sent"
