@@ -1,9 +1,16 @@
 from flask import Flask, render_template, request, redirect
 from datetime import datetime
-from email.message import EmailMessage
-import ssl, smtplib 
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
+
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'gregslist.customer.service@gmail.com'
+app.config['MAIL_PASSWORD'] = 'qcjzwfmmyaekkcgt'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 @app.get('/')
 def home():
@@ -72,25 +79,7 @@ def report_post():
 #need to update once it is figured out how to send a form via email
 @app.post('/report_post_email')
 def report_post_email():
-    subject = "Report Post"
-    body = request.form.get('reason')
-    email(subject, body)
-    return "sent"
-
-def email(subject, body):
-    email_sender = 'gregslist.customer.service@gmail.com'
-    email_password = 'qcjzwfmmyaekkcgt' #generated from google app passwords
-    email_reciever = 'gregslist.customer.service@gmail.com'
-    subject = "Report Post"
-    text = str(body)
-        
-    em = EmailMessage()
-    em['From'] = email_sender
-    em['To'] = email_reciever
-    em['Subject'] = subject
-    em.set_content(text)
-
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-        smtp.login(email_sender, email_password)
-        smtp.sendmail(email_sender, email_reciever, em.as_string())
+    msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com'])
+    msg.body = request.form.get('reason')
+    mail.send(msg)
+    return "Sent"
