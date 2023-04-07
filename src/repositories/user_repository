@@ -1,0 +1,22 @@
+from models import db, user
+
+class UserRepository:
+    #Ensures user info is correct
+    def check_info(self, username, user_password):
+        return user.query.get(username) != None and user.query.get(username).user_password == user_password
+    
+    def change_email(self, user_id, email, old_user, old_pass):
+        if self.check_info(old_user, old_pass)
+            user.query.get(user_id).email = email
+
+    def change_user(self, user_id, new_user, old_user, old_pass):
+        if self.check_info(old_user, old_pass) and self.validate_user(user_name):
+            user.query.get(user_id).username = new_user
+
+    def change_pass(self, user_id, input_pass, old_user, old_pass):
+        if self.check_info(old_user, old_pass):
+            user.query.get(user_id).user_password = input_pass
+
+
+    def validate_user(self, username):
+        return user.query.get(username) == None

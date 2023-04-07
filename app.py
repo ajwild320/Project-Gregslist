@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect
 from datetime import datetime
 
 app = Flask(__name__)
-
+curr_user = ""
 @app.get('/')
 def home():
     return render_template('home.html')
