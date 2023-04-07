@@ -38,6 +38,23 @@ def contact_us():
     return render_template('contact_us.html')
 
 #TODO
+#More suitable for a nonexisting user as some data could be pulled from database
+@app.post('/contact_us_email')
+def contact_us_email():
+    name = request.form.get("name")
+    email = request.form.get("email")
+    reason = request.form.get("reason")
+    if name.__len__() == 0 or email.__len__() == 0 or reason.__len__() == 0:
+        return redirect('/contact_us')
+    else:
+        subject_line = "{} is reaching out".format(name)
+        body = "{} is reaching out. They can be responded to at {}. They are reaching out in regards of: {}".format(name, email, reason)
+        msg = Message(subject_line, sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com', email])
+        msg.body = body
+        mail.send(msg)
+        return render_template('home.html')
+
+#TODO
 #needs to be finished once the sign in is completed and we know where to redirect to
 
 #with the new information learned in class on 3/28/2023 we should be able to create
@@ -91,10 +108,10 @@ def report_post():
     return render_template('report_post.html')
 
 #TODO
-#update to take sender and cc as user, return an error page if doesnt work
+#update to send user as a recipient, return an error page if doesnt work
 @app.post('/report_post_email')
 def report_post_email():
-    msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', cc = ['gregslist.customer.service@gmail.com'], recipients = ['gregslist.customer.service@gmail.com'])
+    msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com'])
     msg.body = request.form.get("reason")
     mail.send(msg)
     return render_template('home.html')
