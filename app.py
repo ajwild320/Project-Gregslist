@@ -1,8 +1,34 @@
 from flask import Flask, render_template, request, redirect
 from datetime import datetime
+from flask_mail import Mail, Message
+from src.models import db
+from dotenv import load_dotenv
+from repositories.user_repository import user_repository_singleton
+import os
+load_dotenv()
 
 app = Flask(__name__)
 curr_user = ""
+
+#DB connection
+db_user = os.getenv('DB_USER')
+db_pass = os.getenv('DB_PASS')
+db_host = os.getenv('DB_HOST')
+db_port = os.getenv('DB_PORT')
+db_name = os.getenv('DB_NAME')
+app.config['SQLALCHEMY_DATABASE_URI']\
+    = f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}'
+
+db.init_app(app)
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'gregslist.customer.service@gmail.com'
+app.config['MAIL_PASSWORD'] = 'yisphiuewbsczkuq'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
 @app.get('/')
 def home():
     return render_template('home.html')
@@ -62,16 +88,40 @@ def sign_in(username, password):
 def deactivate_account():
     return render_template('deactivate_account.html')
 
-#TODO
-#will need to implement how to send this data to an email
 @app.get('/report_post')
 def report_post():     
     return render_template('report_post.html')
 
 #TODO
-#need to update once it is figured out how to send a form via email
+#update to take sender and cc as user, return an error page if doesnt work
 @app.post('/report_post_email')
 def report_post_email():
+    msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', cc = ['gregslist.customer.service@gmail.com'], recipients = ['gregslist.customer.service@gmail.com'])
+    msg.body = request.form.get("reason")
+    mail.send(msg)
     return render_template('home.html')
 
 #NOTE need to add a connection between flask and html form following the week of 3/29/23
+
+
+
+# create user signup page
+@app.get('/signup')
+def signup_page():
+    if curr_user == "":
+        return
+    return render_template('signup.html')
+
+@app.post('/signup')
+def signup_form():
+    new_fname = str(request.form.get('fname'))
+    new_lname = str(request.form.get('lname'))
+    new_email = str(request.form.get('email'))
+    new_user = str(request.form.get('username'))
+    new_pass = str(request.form.get('user_pass'))
+    if user_repository_singleton.validate_user(new_user, new_pass):
+        my_new_user = user_repository_singleton.add_user(new_fname, new_lname, new_user, new_pass, new_email)
+        curr_user = my_new_user.user_id
+        return redirect('/my_account')
+    else:
+        return render_template('signup.html')
