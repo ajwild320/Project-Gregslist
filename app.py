@@ -100,3 +100,14 @@ def report_post_email():
     return render_template('home.html')
 
 #NOTE need to add a connection between flask and html form following the week of 3/29/23
+
+
+
+# create user signup page
+@app.get('/signup')
+def signup_page():
+    return render_template('signup.html')
+
+@app.post('/signup')
+def signup_form():
+    return redirect('/my_account')
