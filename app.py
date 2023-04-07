@@ -98,3 +98,5 @@ def report_post_email():
     msg.body = request.form.get("reason")
     mail.send(msg)
     return render_template('home.html')
+
+#NOTE need to add a connection between flask and html form following the week of 3/29/23
