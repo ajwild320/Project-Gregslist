@@ -35,6 +35,7 @@ def home():
 #Get the items and send them in an email to admin account
 @app.get('/contact_us')
 def contact_us():
+    
     return render_template('contact_us.html')
 
 #TODO
@@ -110,4 +111,14 @@ def signup_page():
 
 @app.post('/signup')
 def signup_form():
+    return redirect('/my_account')
+
+
+# create update user page
+@app.get('/update_account')
+def update_page():
+    return render_template('update_account.html')
+
+@app.post('/update_account')
+def update_form():
     return redirect('/my_account')
