@@ -23,7 +23,7 @@ db_port = os.getenv('DB_PORT')
 db_name = os.getenv('DBNAME')
 print(db_name)
 app.config['SQLALCHEMY_DATABASE_URI']\
-      =  f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}'
+      =  f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/postgres'
 
 db.init_app(app)
 print("HERE")
@@ -171,3 +171,14 @@ def update_page():
 @app.post('/update_account')
 def update_form():
     return redirect('/my_account')
+
+
+# create listing page
+@app.get('/create_listing')
+def user_create_listing_page():
+    return render_template('create_listing.html')
+
+@app.post('/create_listing')
+def user_create_listing_form():
+    return redirect('/my_account')
+
