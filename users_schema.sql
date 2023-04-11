@@ -6,5 +6,5 @@ CREATE TABLE users (
     user_password VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL,
     is_active BOOLEAN default false,
-    PRIMARY KEY (username)
+    PRIMARY KEY (user_id)
 );

@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class Item(db.Model):
-    item_id = db.Column(db.Integer)
+    item_id = db.Column(db.Integer, primary_key = True)
     item_name = db.Column(db.String(255), nullable = False)
     price = db.Column(db.Float, nullable = False)
     category = db.Column(db.String(255), nullable = False)
@@ -34,3 +34,6 @@ class users(db.Model):
         self.username = username
         self.user_password = user_password
         self.user_email = user_email
+    
+    def __repr__(self) -> str:
+        return f'users(first_name = {self.first_name}, last_name = {self.last_name}, username = {self.username}, user_password = {self.user_password}, user_email = {self.user_email})'

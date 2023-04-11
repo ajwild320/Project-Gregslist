@@ -1,10 +1,11 @@
 CREATE TABLE item(
-    user_id INT,
-    item_id SERIAL,
-    item_name VARCHAR(255),
-    price FLOAT, 
-    category VARCHAR(255),
-    description VARCHAR(255),
-    condition VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES User(user_id)
+    user_id INT NOT NULL,
+    item_id SERIAL NOT NULL,
+    item_name VARCHAR(255) NOT NULL,
+    price FLOAT NOT NULL, 
+    category VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    condition VARCHAR(255) NOT NULL,
+    PRIMARY KEY (item_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
