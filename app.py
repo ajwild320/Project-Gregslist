@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, abort
 from datetime import datetime
 from flask_mail import Mail, Message
-from src.models import db
+from src.models import db, Item
+from src.repositories.item_repository import item_repository_singleton
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -118,8 +119,6 @@ def report_post_email():
 
 #NOTE need to add a connection between flask and html form following the week of 3/29/23
 
-
-
 # create user signup page
 @app.get('/signup')
 def signup_page():
@@ -128,3 +127,40 @@ def signup_page():
 @app.post('/signup')
 def signup_form():
     return redirect('/my_account')
+
+@app.get('/items')
+def list_all_items():
+    all_items = item_repository_singleton.get_all_items()
+    return render_template('', list_items_active=True, items=all_items)
+
+@app.get('/items/<int:item_id>')
+def get_single_item(item_id):
+    single_item = item_repository_singleton.get_item_by_id(item_id)
+    return render_template('', item=single_item)
+
+
+@app.get('/items/new')
+def create_item_form():
+    return render_template('', create_item_active=True)
+
+
+@app.post('/items')
+def create_item():
+    item_name = request.form.get('item_name')
+    price = request.form.get('price', type = float)
+    category = request.form.get('category')
+    description = request.form.get('description')
+    condition = request.form.get('condition')
+    if item_name == '' or price < 0 or category == '' or description == '' or condition == '':
+        abort(400)
+    created_item = item_repository_singleton.create_item()
+    return redirect(f'/item/{created_item.item_id}')
+
+
+@app.get('/items/search')
+def search_items_by_category():
+    found_items = []
+    q = request.args.get('q', '')
+    if q != '':
+        found_items = item_repository_singleton.search_items(q)
+    return render_template('', search_active=True, item=found_items, search_query=q)
