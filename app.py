@@ -4,22 +4,30 @@ from flask_mail import Mail, Message
 from src.models import db, Item
 from src.repositories.item_repository import item_repository_singleton
 from dotenv import load_dotenv
+from src.repositories.user_repository import user_repository_singleton
 import os
 load_dotenv()
 
 app = Flask(__name__)
+file = open("user.txt", "a")
+
+
+
+curr_user = -1
+
 
 #DB connection
 db_user = os.getenv('DB_USER')
 db_pass = os.getenv('DB_PASS')
 db_host = os.getenv('DB_HOST')
 db_port = os.getenv('DB_PORT')
-db_name = os.getenv('DB_NAME')
+db_name = os.getenv('DBNAME')
+print(db_name)
 app.config['SQLALCHEMY_DATABASE_URI']\
-    = f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}'
+      =  f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}'
 
 db.init_app(app)
-
+print("HERE")
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
@@ -27,6 +35,10 @@ app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
+
+
+
+
 
 @app.get('/')
 def home():
@@ -36,6 +48,7 @@ def home():
 #Get the items and send them in an email to admin account
 @app.get('/contact_us')
 def contact_us():
+    
     return render_template('contact_us.html')
 
 #TODO
@@ -73,6 +86,11 @@ def my_account_invalid():
 #can use database to check if a user exists
 @app.get('/my_account')
 def my_account():
+    file = open("user.txt", "r")
+    curr_user = file.read()
+    file.close()
+    my_user = user_repository_singleton.get_user_by_id(curr_user)
+
     hour = datetime.now().hour
     if hour < 11:
         time_of_day = "Morning"
@@ -80,20 +98,25 @@ def my_account():
         time_of_day = "Afternoon"
     else:
         time_of_day = "Evening"
+    print(curr_user)
+    print("MADE IT HERE")
 
-    first_name = "a"
+    first_name = my_user.first_name
     first_name = first_name.title()
-    last_name = "b"
+    last_name = my_user.last_name
     last_name = last_name.title()
-    username = "c"
-    password = "d"
-    email = "e"
+    username = my_user.username
+    password = my_user.user_password
+    email = my_user.user_email
     return render_template('my_account.html', first_name = first_name, last_name = last_name, username = username, password = password, email = email, time_of_day = time_of_day)
 
 #TODO
 #fix the return once page is made
 @app.get('/sign_in')
-def sign_in(username, password):
+def sign_in():
+    file = open("user.txt", "r")
+    curr_user = file.read()
+    file.close()
     return render_template('home.html')
 
 #TODO
@@ -105,7 +128,7 @@ def deactivate_account():
     return render_template('deactivate_account.html')
 
 @app.get('/report_post')
-def report_post():     
+def report_post():    
     return render_template('report_post.html')
 
 #TODO
@@ -122,6 +145,11 @@ def report_post_email():
 # create user signup page
 @app.get('/signup')
 def signup_page():
+    file = open("user.txt", "r")
+    curr_user = file.read()
+    file.close()
+    if curr_user != "":
+        return render_template('home.html')
     return render_template('signup.html')
 
 @app.post('/signup')
@@ -163,4 +191,37 @@ def search_items_by_category():
     q = request.args.get('q', '')
     if q != '':
         found_items = item_repository_singleton.search_items(q)
-    return render_template('', search_active=True, item=found_items, search_query=q)
+        return render_template('', search_active=True, item=found_items, search_query=q)
+    new_fname = str(request.form.get('fname'))
+    new_lname = str(request.form.get('lname'))
+    new_email = str(request.form.get('email'))
+    new_user = str(request.form.get('username'))
+    new_pass = str(request.form.get('user_pass'))
+
+
+    #checks to make sure user does not already exist.
+    if not(user_repository_singleton.validate_user(new_user)):
+        print("Looks safe!")
+        curr_user = user_repository_singleton.add_user(new_fname, new_lname, new_user, new_pass, new_email).user_id
+        file = open("user.txt", "a")
+        file.seek(0)
+        file.truncate()
+        file.write(str(curr_user))
+        file.close()
+        user_repository_singleton.change_email( curr_user, "qwertyuiop", new_user, new_pass)
+       
+        return redirect('/my_account')
+    else:
+        file = open("user.txt", "r")
+        curr_user = file.read()
+        file.close()
+        return redirect('/sign_in')
+
+# create update user page
+@app.get('/update_account')
+def update_page():
+    return render_template('update_account.html')
+
+@app.post('/update_account')
+def update_form():
+    return redirect('/my_account')
