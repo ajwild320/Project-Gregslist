@@ -4,14 +4,12 @@
 Update Account
 {% endblock %}
 {% block content %}
-<div class="mt-2 mb-4  mx-3">
-    <h1 style="font-size: 60px;">Update Account</h1> 
-</div>
+    <h1 style="padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 60px;">Update Account</h1> 
 {% endblock %}
 
 {% block body %}
 
-<h1 class="text-center text-light fs-1">Please enter your current account credentials</h1>
+<h1 style="padding-top: 1rem; padding-bottom: 2rem;"class="text-center text-light fs-1">Please enter your current account credentials</h1>
 <div class="bg-light w-50 mx-auto p-3 mt-3 mb-5">
     <form method="post" action="/update">
         <div class="px-4">
@@ -36,11 +34,11 @@ Update Account
                 <input type="text" class="form-control mt-1" id="formGroupExampleInput" placeholder="Enter password:">
             </div>
         </div>
-        <div class="text-center"><button type="submit" class="btn btn-lg btn-primary mt-5 mb-4" id="button">Create account</button></div> 
+        <div class="text-center"><button type="submit" class="btn btn-lg btn-primary mt-5 mb-4" id="button">Validate account</button></div> 
     </form>
 </div>
 
-<h1 class="text-center text-light fs-1">Please enter your new account credentials</h1>
+<h1 style="padding-bottom: 2rem;" class="text-center text-light fs-1">Please enter your new account credentials</h1>
 <div class="bg-light w-50 mx-auto p-3 mt-3 mb-5">
     <form method="post" action="/update">
         <div class="px-4">
@@ -65,7 +63,7 @@ Update Account
                 <input type="text" class="form-control mt-1" id="formGroupExampleInput" placeholder="Enter password:">
             </div>
         </div>
-        <div class="text-center"><button type="submit" class="btn btn-lg btn-primary mt-5 mb-4" id="button">Create account</button></div> 
+        <div class="text-center"><button type="submit" class="btn btn-lg btn-primary mt-5 mb-4" id="button">Update account</button></div> 
     </form>
 </div>
 {% endblock %}
