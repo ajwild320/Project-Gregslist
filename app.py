@@ -23,7 +23,7 @@ db_port = os.getenv('DB_PORT')
 db_name = os.getenv('DBNAME')
 print(db_name)
 app.config['SQLALCHEMY_DATABASE_URI']\
-      =  f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/postgres'
+      =  f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}'
 
 db.init_app(app)
 print("HERE")
