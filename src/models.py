@@ -8,17 +8,17 @@ class Item(db.Model):
     price = db.Column(db.Float, nullable = False)
     category = db.Column(db.String(255), nullable = False)
     description = db.Column(db.String(255), nullable = False)
-    condtion = db.Column(db.String(255), nullable = False)
+    condition = db.Column(db.String(255), nullable = False)
 
     def __init__(self, item_name: str, price: float, category: str, description: str, condition: str) -> None:
         self.item_name = item_name
         self.price = price
         self.category = category
         self.description = description
-        self. condtion = condition
+        self. condition = condition
 
     def __repr__(self) -> str:
-        return f'Item(item_name = {self.item_name}, price = {self.price}, category = {self.category}, description = {self.description}, condition = {self.condtion})'
+        return f'Item(item_name = {self.item_name}, price = {self.price}, category = {self.category}, description = {self.description}, condition = {self.condition})'
 
 class users(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
