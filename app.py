@@ -11,12 +11,9 @@ load_dotenv()
 app = Flask(__name__)
 file = open("user.txt", "a")
 
-
-
 curr_user = -1
 
-
-#DB connection
+#DB connection and setup
 db_user = os.getenv('DB_USER')
 db_pass = os.getenv('DB_PASS')
 db_host = os.getenv('DB_HOST')
@@ -28,6 +25,8 @@ app.config['SQLALCHEMY_DATABASE_URI']\
 
 db.init_app(app)
 print("HERE")
+
+#Mail connection and setup
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
@@ -37,18 +36,12 @@ app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
 
-
-
-
 @app.get('/')
 def home():
     return render_template('home.html')
 
-#TODO
-#Get the items and send them in an email to admin account
 @app.get('/contact_us')
 def contact_us():
-    
     return render_template('contact_us.html')
 
 #TODO
@@ -142,20 +135,6 @@ def report_post_email():
 
 #NOTE need to add a connection between flask and html form following the week of 3/29/23
 
-# create user signup page
-@app.get('/signup')
-def signup_page():
-    file = open("user.txt", "r")
-    curr_user = file.read()
-    file.close()
-    if curr_user != "":
-        return render_template('home.html')
-    return render_template('signup.html')
-
-@app.post('/signup')
-def signup_form():
-    return redirect('/my_account')
-
 @app.get('/items')
 def list_all_items():
     all_items = item_repository_singleton.get_all_items()
@@ -192,12 +171,24 @@ def search_items_by_category():
     if q != '':
         found_items = item_repository_singleton.search_items(q)
         return render_template('', search_active=True, item=found_items, search_query=q)
+
+# create user signup page
+@app.get('/signup')
+def signup_page():
+    file = open("user.txt", "r")
+    curr_user = file.read()
+    file.close()
+    if curr_user != "":
+        return render_template('home.html')
+    return render_template('signup.html')
+
+@app.post('/signup')
+def signup_form():    
     new_fname = str(request.form.get('fname'))
     new_lname = str(request.form.get('lname'))
     new_email = str(request.form.get('email'))
     new_user = str(request.form.get('username'))
     new_pass = str(request.form.get('user_pass'))
-
 
     #checks to make sure user does not already exist.
     if not(user_repository_singleton.validate_user(new_user)):
