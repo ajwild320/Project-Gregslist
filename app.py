@@ -216,3 +216,14 @@ def update_page():
 @app.post('/update_account')
 def update_form():
     return redirect('/my_account')
+
+
+# create listing page
+@app.get('/create_listing')
+def user_create_listing_page():
+    return render_template('create_listing.html')
+
+@app.post('/create_listing')
+def user_create_listing_form():
+    return redirect('/my_account')
+
