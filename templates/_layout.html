@@ -8,11 +8,11 @@
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <title>{% block title %}{% endblock %}</title>
 </head>
-<body class="bg-info">
+<body style="background-color: rgba(85, 169, 230, 1);">
   {% block content %} {% endblock %}
 
-  <nav class="navbar navbar-expand-sm navbar-light bg-light mx-3">
-      <a class="navbar-brand mx-3" href="/">Gregslist</a>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark mx-3">
+      <a style="font-weight: 700;" class="navbar-brand mx-3" href="/">Gregslist</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -30,6 +30,9 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/update_account">Update Account</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/create_listing">Create Listing</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/contact_us">Contact Us</a>
