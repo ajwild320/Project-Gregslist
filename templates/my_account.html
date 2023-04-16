@@ -12,19 +12,16 @@
     <h1>Good {{time_of_day}} {{first_name}}</h1>
 
     <h2>First Name:</h2>
-    <h3>{{first_name}}</h3>
+    <h3>{{user["first_name"]}}</h3>
 
     <h2>Last Name:</h2>
-    <h3>{{last_name}}</h3>
+    <h3>{{user["last_name"]}}</h3>
 
     <h2>Username:</h2>
-    <h3>{{username}}</h3>
-  
-    <h2>Password:</h2>
-    <h3>{{password}}</h3>
+    <h3>{{user["username"]}}</h3>
   
     <h2>Email:</h2>
-    <h3>{{email}}</h3>
+    <h3>{{user["email"]}}</h3>
 
     <a href="/deactivate_account" class="btn btn-danger" role="button">Deactivate Account</a> <!--https://www.w3schools.com/bootstrap/bootstrap_buttons.asp how to utilize href with a button -->
 {% endblock %}
