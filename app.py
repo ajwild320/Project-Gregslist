@@ -165,12 +165,12 @@ def create_item():
 
 
 @app.get('/items/search')
-def search_items_by_category():
+def search_items_by_name():
     found_items = []
-    q = request.args.get('q', '')
-    if q != '':
-        found_items = item_repository_singleton.search_items(q)
-        return render_template('', search_active=True, item=found_items, search_query=q)
+    name = request.args.get('name', '')
+    if name != '':
+        found_items = item_repository_singleton.search_items_name(name)
+    return render_template('search.html', search_active=True, item=found_items, search_query=name)
 
 # create user signup page
 @app.get('/signup')

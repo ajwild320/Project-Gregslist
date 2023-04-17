@@ -1,0 +1,50 @@
+{% extends '_layout.html' %}
+
+{% block title %}
+    Search page
+{% endblock %}
+
+{% block content %}
+    <h1 style="padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 60px;">Search for Items</h1> 
+{% endblock %}
+
+{% block body %}
+    <h3 style="margin-left: -4rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 50px;">Search by Name:</h1>
+    <form action="/items/search" method="get" class="mb-5"> 
+        <div class="input-group">
+            <input type="text" name="name" id="name" class="form-control" required=True>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
+    {% if search_query != '' %}
+    {% if items|length != 0 %}
+    <table class="table">
+    <thead>
+        <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Condition</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td><a href="/items/{{ item.item_id }}">{{ item.name }}</a></td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.condition }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    {% else %}
+    <p>No items found</p>
+    {% endif %}
+    {% endif %}
+{% endblock %}

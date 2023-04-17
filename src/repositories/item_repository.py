@@ -20,7 +20,7 @@ class ItemRepository:
         return new_item
 
     #Gets all items matching a variety of substrings
-    def search_items(self, item_name):
+    def search_items_name(self, item_name):
         item = Item.query.filter(Item.item_name.ilike(item_name)).all()
         return item
 
