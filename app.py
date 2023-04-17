@@ -143,7 +143,7 @@ def list_all_items():
 @app.get('/items/<int:item_id>')
 def get_single_item(item_id):
     single_item = item_repository_singleton.get_item_by_id(item_id)
-    return render_template('', item=single_item)
+    return render_template('single_item.html', item=single_item)
 
 
 @app.get('/items/new')
