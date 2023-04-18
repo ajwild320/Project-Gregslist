@@ -21,10 +21,9 @@ class Item(db.Model):
         return f'Item(item_name = {self.item_name}, price = {self.price}, category = {self.category}, description = {self.description}, condition = {self.condition})'
 
 class users(db.Model):
-    user_id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))
-    username = db.Column(db.String(255))
+    username = db.Column(db.String(255), primary_key=True)
     user_password = db.Column(db.String(255))
     user_email = db.Column(db.String(255))
 
