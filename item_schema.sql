@@ -1,5 +1,5 @@
 CREATE TABLE item(
-    username INT NOT NULL,
+    username VARCHAR(255) NOT NULL,
     item_id SERIAL NOT NULL,
     item_name VARCHAR(255) NOT NULL,
     price FLOAT NOT NULL, 

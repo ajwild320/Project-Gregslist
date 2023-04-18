@@ -20,23 +20,21 @@
     </form>
 
     {% if search_query != '' %}
-    {% if items|length != 0 %}
+    {% if item|length != 0 %}
     <table class="table">
     <thead>
         <tr>
         <th>Item</th>
         <th>Price</th>
-        <th>Category</th>
         <th>Description</th>
         <th>Condition</th>
         </tr>
     </thead>
     <tbody>
-        {% for item in items %}
+        {% for item in item %}
         <tr>
-            <td><a href="/items/{{ item.item_id }}">{{ item.name }}</a></td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.category }}</td>
+            <td><a href="/items/{{ item.item_id }}"></a>{{ item.item_name }}</a></td>
+            <td>${{ item.price }}</td>
             <td>{{ item.description }}</td>
             <td>{{ item.condition }}</td>
         </tr>
