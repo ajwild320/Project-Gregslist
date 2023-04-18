@@ -1,5 +1,5 @@
 CREATE TABLE item(
-    user_id INT NOT NULL,
+    username INT NOT NULL,
     item_id SERIAL NOT NULL,
     item_name VARCHAR(255) NOT NULL,
     price FLOAT NOT NULL, 
@@ -7,5 +7,5 @@ CREATE TABLE item(
     description VARCHAR(255) NOT NULL,
     condition VARCHAR(255) NOT NULL,
     PRIMARY KEY (item_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (username) REFERENCES users(username)
 );
