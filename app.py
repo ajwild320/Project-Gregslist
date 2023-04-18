@@ -145,11 +145,9 @@ def get_single_item(item_id):
     single_item = item_repository_singleton.get_item_by_id(item_id)
     return render_template('single_item.html', item=single_item)
 
-
 @app.get('/items/new')
 def create_item_form():
     return render_template('', create_item_active=True)
-
 
 @app.post('/items')
 def create_item():
@@ -162,7 +160,6 @@ def create_item():
         abort(400)
     created_item = item_repository_singleton.create_item()
     return redirect(f'/item/{created_item.item_id}')
-
 
 @app.get('/items/search')
 def search_items_by_name():
