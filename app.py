@@ -164,13 +164,11 @@ def list_all_items():
 @app.get('/items/<int:item_id>')
 def get_single_item(item_id):
     single_item = item_repository_singleton.get_item_by_id(item_id)
-    return render_template('', item=single_item)
-
+    return render_template('single_item.html', item=single_item)
 
 @app.get('/items/new')
 def create_item_form():
     return render_template('', create_item_active=True)
-
 
 @app.post('/items')
 def create_item():
@@ -184,14 +182,13 @@ def create_item():
     created_item = item_repository_singleton.create_item()
     return redirect(f'/item/{created_item.item_id}')
 
-
 @app.get('/items/search')
-def search_items_by_category():
+def search_items_by_name():
     found_items = []
-    q = request.args.get('q', '')
-    if q != '':
-        found_items = item_repository_singleton.search_items(q)
-        return render_template('', search_active=True, item=found_items, search_query=q)
+    name = request.args.get('name', '')
+    if name != '':
+        found_items = item_repository_singleton.search_items_name(name)
+    return render_template('search.html', search_active=True, item=found_items, search_query=name)
 
 # create user signup page
 @app.get('/signup')
