@@ -9,16 +9,18 @@ class Item(db.Model):
     category = db.Column(db.String(255), nullable = False)
     description = db.Column(db.String(255), nullable = False)
     condition = db.Column(db.String(255), nullable = False)
+    username = db.Column(db.String(255), foreign_key = True)
 
-    def __init__(self, item_name: str, price: float, category: str, description: str, condition: str) -> None:
+    def __init__(self, item_name: str, price: float, category: str, description: str, condition: str, username: str) -> None:
         self.item_name = item_name
         self.price = price
         self.category = category
         self.description = description
         self. condition = condition
+        self.username = username
 
     def __repr__(self) -> str:
-        return f'Item(item_name = {self.item_name}, price = {self.price}, category = {self.category}, description = {self.description}, condition = {self.condition})'
+        return f'Item(item_name = {self.item_name}, price = {self.price}, category = {self.category}, description = {self.description}, condition = {self.condition}, username = {self.username})'
 
 class users(db.Model):
     first_name = db.Column(db.String(255))
