@@ -11,8 +11,6 @@ load_dotenv()
 
 app = Flask(__name__)
 
-
-
 #DB connection and setup
 db_user = os.getenv('DB_USER')
 db_pass = os.getenv('DB_PASS')
@@ -61,43 +59,20 @@ def contact_us_email():
         mail.send(msg)
         return render_template('home.html')
 
-#TODO
-#needs to be finished once the sign in is completed and we know where to redirect to
-
-#with the new information learned in class on 3/28/2023 we should be able to create
-#and populate the database with the new information needed to implement the sign in
-#feature
-@app.get('/my_account_invalid')
-def my_account_invalid():
-    username = request.form.get('username')
-    password = request.form.get('password')
-    return render_template('my_account_invalid.html')
-
-#TODO
-#retrieve from when a user is created
-
-#can use database to check if a user exists
 @app.get('/my_account')
 def my_account():
-
-    user = session['user']
-    hour = datetime.now().hour
-    if hour < 11:
-        time_of_day = "Morning"
-    elif hour >= 11 and hour < 17:
-        time_of_day = "Afternoon"
-    else:
-        time_of_day = "Evening"
-
-    # first_name = my_user.first_name
-    # first_name = first_name.title()
-    # last_name = my_user.last_name
-    # last_name = last_name.title()
-    # username = my_user.username
-    # password = my_user.user_password
-    # email = my_user.user_email
-    return render_template('my_account.html', user=user, time_of_day=time_of_day)
-    # return render_template('my_account.html', first_name = first_name, last_name = last_name, username = username, password = password, email = email, time_of_day = time_of_day)
+    try:
+        user = session['user']
+        hour = datetime.now().hour
+        if hour < 11:
+            time_of_day = "Morning"
+        elif hour >= 11 and hour < 17:
+            time_of_day = "Afternoon"
+        else:
+            time_of_day = "Evening"
+        return render_template('my_account.html', user=user, time_of_day=time_of_day)
+    except:
+        return render_template('sign_in.html')
 
 #TODO
 #fix the return once page is made
@@ -106,7 +81,6 @@ def to_sign_in_page():
     if 'user' not in session:
         return render_template('sign_in.html')
     return redirect("/my_account")
-
 
 @app.post('/sign_in')
 def sign_in():
@@ -129,6 +103,7 @@ def sign_in():
     }
 
     return redirect('/my_account')
+
 @app.get("/log_out")
 def logout():
     del session['user']
@@ -143,16 +118,20 @@ def deactivate_account():
 
 @app.get('/report_post')
 def report_post():    
-    return render_template('report_post.html')
+    try:
+        user = session['user']
+        return render_template('report_post.html')
+    except:
+        return render_template('sign_in.html')
 
 #TODO
 #update to send user as a recipient, return an error page if doesnt work
 @app.post('/report_post_email')
 def report_post_email():
-    msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com'])
-    msg.body = request.form.get("reason")
-    mail.send(msg)
-    return render_template('home.html')
+        msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com'])
+        msg.body = request.form.get("reason")
+        mail.send(msg)
+        return render_template('home.html')
 
 #NOTE need to add a connection between flask and html form following the week of 3/29/23
 
@@ -184,12 +163,16 @@ def create_item():
 
 @app.get('/items/search')
 def search_items_by_name():
-    found_items = []
-    name = request.args.get('name', '')
-    if name != '':
-        found_items = item_repository_singleton.search_items_name(name)
-    return render_template('search.html', search_active=True, item=found_items, search_query=name)
-
+    try:
+        user = session['user']
+        found_items = []
+        name = request.args.get('name', '')
+        if name != '':
+            found_items = item_repository_singleton.search_items_name(name)
+        return render_template('search.html', search_active=True, item=found_items, search_query=name)
+    except:
+        return render_template('sign_in.html')
+    
 # create user signup page
 @app.get('/signup')
 def signup_page():
