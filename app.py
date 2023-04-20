@@ -18,7 +18,7 @@ db_user = os.getenv('DB_USER')
 db_pass = os.getenv('DB_PASS')
 db_host = os.getenv('DB_HOST')
 db_port = os.getenv('DB_PORT')
-db_name = os.getenv('DBNAME')
+db_name = os.getenv('DB_NAME')
 
 app.config['SQLALCHEMY_DATABASE_URI']\
       =  f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}'
@@ -89,16 +89,8 @@ def my_account():
     else:
         time_of_day = "Evening"
 
-    # first_name = my_user.first_name
-    # first_name = first_name.title()
-    # last_name = my_user.last_name
-    # last_name = last_name.title()
-    # username = my_user.username
-    # password = my_user.user_password
-    # email = my_user.user_email
     return render_template('my_account.html', user=user, time_of_day=time_of_day)
-    # return render_template('my_account.html', first_name = first_name, last_name = last_name, username = username, password = password, email = email, time_of_day = time_of_day)
-
+    
 #TODO
 #fix the return once page is made
 @app.get('/sign_in')
