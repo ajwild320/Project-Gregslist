@@ -16,7 +16,7 @@ db_user = os.getenv('DB_USER')
 db_pass = os.getenv('DB_PASS')
 db_host = os.getenv('DB_HOST')
 db_port = os.getenv('DB_PORT')
-db_name = os.getenv('DBNAME')
+db_name = os.getenv('DB_NAME')
 
 app.config['SQLALCHEMY_DATABASE_URI']\
       =  f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}'
@@ -61,6 +61,7 @@ def contact_us_email():
 
 @app.get('/my_account')
 def my_account():
+<<<<<<< HEAD
     try:
         user = session['user']
         hour = datetime.now().hour
@@ -74,6 +75,20 @@ def my_account():
     except:
         return render_template('sign_in.html')
 
+=======
+
+    user = session['user']
+    hour = datetime.now().hour
+    if hour < 11:
+        time_of_day = "Morning"
+    elif hour >= 11 and hour < 17:
+        time_of_day = "Afternoon"
+    else:
+        time_of_day = "Evening"
+
+    return render_template('my_account.html', user=user, time_of_day=time_of_day)
+    
+>>>>>>> 349ed4f2b2fb6d6684657ad8545e690a8a8b5351
 #TODO
 #fix the return once page is made
 @app.get('/sign_in')
