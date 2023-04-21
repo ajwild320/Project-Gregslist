@@ -13,8 +13,8 @@ class ItemRepository:
         return one_item
 
     #Creates a new item in the DB
-    def create_item(self, item_name, price, category, description, condition):
-        new_item = Item(item_name, price, category, description, condition)
+    def create_item(self, item_name, price, category, description, condition, username):
+        new_item = Item(item_name, price, category, description, condition, username)
         db.session.add(new_item)
         db.session.commit()
         return new_item

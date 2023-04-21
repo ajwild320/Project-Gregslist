@@ -124,14 +124,15 @@ def report_post():
     except:
         return render_template('sign_in.html')
 
-#TODO
-#update to send user as a recipient, return an error page if doesnt work
 @app.post('/report_post_email')
 def report_post_email():
+    try:
         msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com'])
         msg.body = request.form.get("reason")
         mail.send(msg)
         return render_template('home.html')
+    except:
+        abort(400)
 
 #NOTE need to add a connection between flask and html form following the week of 3/29/23
 
@@ -145,21 +146,19 @@ def get_single_item(item_id):
     single_item = item_repository_singleton.get_item_by_id(item_id)
     return render_template('single_item.html', item=single_item)
 
-@app.get('/items/new')
-def create_item_form():
-    return render_template('', create_item_active=True)
-
 @app.post('/items')
 def create_item():
+    user = session['user']
+    seller = user.get('username')
     item_name = request.form.get('item_name')
     price = request.form.get('price', type = float)
     category = request.form.get('category')
     description = request.form.get('description')
     condition = request.form.get('condition')
-    if item_name == '' or price < 0 or category == '' or description == '' or condition == '':
+    if item_name == '' or price < 0 or price == 0 or category == '' or description == '' or condition == '':
         abort(400)
-    created_item = item_repository_singleton.create_item()
-    return redirect(f'/item/{created_item.item_id}')
+    created_item = item_repository_singleton.create_item(item_name, price, category, description, condition, seller)
+    return redirect(f'/items/{created_item.item_id}')
 
 @app.get('/items/search')
 def search_items_by_name():
@@ -218,13 +217,10 @@ def update_page():
 def update_form():
     return redirect('/my_account')
 
-
-# create listing page
 @app.get('/create_listing')
 def user_create_listing_page():
-    return render_template('create_listing.html')
-
-@app.post('/create_listing')
-def user_create_listing_form():
-    return redirect('/my_account')
-
+    try:
+        user = session['user']
+        return render_template('create_listing.html')
+    except:
+        return render_template('sign_in.html')    
