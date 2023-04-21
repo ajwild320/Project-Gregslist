@@ -11,8 +11,6 @@ load_dotenv()
 
 app = Flask(__name__)
 
-
-
 #DB connection and setup
 db_user = os.getenv('DB_USER')
 db_pass = os.getenv('DB_PASS')
@@ -61,24 +59,23 @@ def contact_us_email():
         mail.send(msg)
         return render_template('home.html')
 
-#TODO
-#needs to be finished once the sign in is completed and we know where to redirect to
-
-#with the new information learned in class on 3/28/2023 we should be able to create
-#and populate the database with the new information needed to implement the sign in
-#feature
-@app.get('/my_account_invalid')
-def my_account_invalid():
-    username = request.form.get('username')
-    password = request.form.get('password')
-    return render_template('my_account_invalid.html')
-
-#TODO
-#retrieve from when a user is created
-
-#can use database to check if a user exists
 @app.get('/my_account')
 def my_account():
+<<<<<<< HEAD
+    try:
+        user = session['user']
+        hour = datetime.now().hour
+        if hour < 11:
+            time_of_day = "Morning"
+        elif hour >= 11 and hour < 17:
+            time_of_day = "Afternoon"
+        else:
+            time_of_day = "Evening"
+        return render_template('my_account.html', user=user, time_of_day=time_of_day)
+    except:
+        return render_template('sign_in.html')
+
+=======
 
     user = session['user']
     hour = datetime.now().hour
@@ -91,6 +88,7 @@ def my_account():
 
     return render_template('my_account.html', user=user, time_of_day=time_of_day)
     
+>>>>>>> 349ed4f2b2fb6d6684657ad8545e690a8a8b5351
 #TODO
 #fix the return once page is made
 @app.get('/sign_in')
@@ -98,7 +96,6 @@ def to_sign_in_page():
     if 'user' not in session:
         return render_template('sign_in.html')
     return redirect("/my_account")
-
 
 @app.post('/sign_in')
 def sign_in():
@@ -121,6 +118,7 @@ def sign_in():
     }
 
     return redirect('/my_account')
+
 @app.get("/log_out")
 def logout():
     del session['user']
@@ -135,16 +133,21 @@ def deactivate_account():
 
 @app.get('/report_post')
 def report_post():    
-    return render_template('report_post.html')
+    try:
+        user = session['user']
+        return render_template('report_post.html')
+    except:
+        return render_template('sign_in.html')
 
-#TODO
-#update to send user as a recipient, return an error page if doesnt work
 @app.post('/report_post_email')
 def report_post_email():
-    msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com'])
-    msg.body = request.form.get("reason")
-    mail.send(msg)
-    return render_template('home.html')
+    try:
+        msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com'])
+        msg.body = request.form.get("reason")
+        mail.send(msg)
+        return render_template('home.html')
+    except:
+        abort(400)
 
 #NOTE need to add a connection between flask and html form following the week of 3/29/23
 
@@ -158,30 +161,32 @@ def get_single_item(item_id):
     single_item = item_repository_singleton.get_item_by_id(item_id)
     return render_template('single_item.html', item=single_item)
 
-@app.get('/items/new')
-def create_item_form():
-    return render_template('', create_item_active=True)
-
 @app.post('/items')
 def create_item():
+    user = session['user']
+    seller = user.get('username')
     item_name = request.form.get('item_name')
     price = request.form.get('price', type = float)
     category = request.form.get('category')
     description = request.form.get('description')
     condition = request.form.get('condition')
-    if item_name == '' or price < 0 or category == '' or description == '' or condition == '':
+    if item_name == '' or price < 0 or price == 0 or category == '' or description == '' or condition == '':
         abort(400)
-    created_item = item_repository_singleton.create_item()
-    return redirect(f'/item/{created_item.item_id}')
+    created_item = item_repository_singleton.create_item(item_name, price, category, description, condition, seller)
+    return redirect(f'/items/{created_item.item_id}')
 
 @app.get('/items/search')
 def search_items_by_name():
-    found_items = []
-    name = request.args.get('name', '')
-    if name != '':
-        found_items = item_repository_singleton.search_items_name(name)
-    return render_template('search.html', search_active=True, item=found_items, search_query=name)
-
+    try:
+        user = session['user']
+        found_items = []
+        name = request.args.get('name', '')
+        if name != '':
+            found_items = item_repository_singleton.search_items_name(name)
+        return render_template('search.html', search_active=True, item=found_items, search_query=name)
+    except:
+        return render_template('sign_in.html')
+    
 # create user signup page
 @app.get('/signup')
 def signup_page():
@@ -227,13 +232,10 @@ def update_page():
 def update_form():
     return redirect('/my_account')
 
-
-# create listing page
 @app.get('/create_listing')
 def user_create_listing_page():
-    return render_template('create_listing.html')
-
-@app.post('/create_listing')
-def user_create_listing_form():
-    return redirect('/my_account')
-
+    try:
+        user = session['user']
+        return render_template('create_listing.html')
+    except:
+        return render_template('sign_in.html')    
