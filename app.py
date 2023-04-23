@@ -211,7 +211,11 @@ def signup_form():
 # create update user page
 @app.get('/update_account')
 def update_page():
-    return render_template('update_account.html')
+    try:
+        user = session['user']
+        return render_template('update_account.html')
+    except:
+        return render_template('sign_in.html')
 
 @app.post('/update_account')
 def update_form():
