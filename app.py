@@ -61,7 +61,6 @@ def contact_us_email():
 
 @app.get('/my_account')
 def my_account():
-<<<<<<< HEAD
     try:
         user = session['user']
         hour = datetime.now().hour
@@ -75,20 +74,6 @@ def my_account():
     except:
         return render_template('sign_in.html')
 
-=======
-
-    user = session['user']
-    hour = datetime.now().hour
-    if hour < 11:
-        time_of_day = "Morning"
-    elif hour >= 11 and hour < 17:
-        time_of_day = "Afternoon"
-    else:
-        time_of_day = "Evening"
-
-    return render_template('my_account.html', user=user, time_of_day=time_of_day)
-    
->>>>>>> 349ed4f2b2fb6d6684657ad8545e690a8a8b5351
 #TODO
 #fix the return once page is made
 @app.get('/sign_in')
