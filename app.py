@@ -107,7 +107,6 @@ def sign_in():
 @app.get("/log_out")
 def logout():
      try:
-        
         del session['user']
         return redirect("/")
      except:
