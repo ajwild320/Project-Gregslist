@@ -162,11 +162,11 @@ def get_single_item(item_id):
 def create_item():
     user = session['user']
     seller = user.get('username')
-    item_name = request.form.get('item_name')
+    item_name = request.form.get('item_name').title()
     price = request.form.get('price', type = float)
-    category = request.form.get('category')
+    category = request.form.get('category').title()
     description = request.form.get('description')
-    condition = request.form.get('condition')
+    condition = request.form.get('condition').title()
     if item_name == '' or price < 0 or price == 0 or category == '' or description == '' or condition == '':
         abort(400)
     created_item = item_repository_singleton.create_item(item_name, price, category, description, condition, seller)
