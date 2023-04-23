@@ -181,8 +181,8 @@ def signup_page():
 
 @app.post('/signup')
 def signup_form():    
-    new_fname = str(request.form.get('fname'))
-    new_lname = str(request.form.get('lname'))
+    new_fname = str(request.form.get('fname').title())
+    new_lname = str(request.form.get('lname').title())
     new_email = str(request.form.get('email'))
     new_user = str(request.form.get('username'))
     new_pass = str(request.form.get('user_pass'))
