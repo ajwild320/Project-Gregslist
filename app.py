@@ -106,11 +106,15 @@ def sign_in():
 
 @app.get("/log_out")
 def logout():
-    del session['user']
-    return redirect("/")
+     try:
+        
+        del session['user']
+        return redirect("/")
+     except:
+        return redirect('/')
+
 #TODO
 #once database is created, use the username to delete from database
-
 # can also assign ID's to each user account and delete them via ID
 @app.get('/deactivate_account')
 def deactivate_account():
