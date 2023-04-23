@@ -61,7 +61,6 @@ def contact_us_email():
 
 @app.get('/my_account')
 def my_account():
-<<<<<<< HEAD
     try:
         user = session['user']
         hour = datetime.now().hour
@@ -75,20 +74,6 @@ def my_account():
     except:
         return render_template('sign_in.html')
 
-=======
-
-    user = session['user']
-    hour = datetime.now().hour
-    if hour < 11:
-        time_of_day = "Morning"
-    elif hour >= 11 and hour < 17:
-        time_of_day = "Afternoon"
-    else:
-        time_of_day = "Evening"
-
-    return render_template('my_account.html', user=user, time_of_day=time_of_day)
-    
->>>>>>> 349ed4f2b2fb6d6684657ad8545e690a8a8b5351
 #TODO
 #fix the return once page is made
 @app.get('/sign_in')
@@ -121,15 +106,29 @@ def sign_in():
 
 @app.get("/log_out")
 def logout():
-    del session['user']
-    return redirect("/")
-#TODO
-#once database is created, use the username to delete from database
+     try:
+        del session['user']
+        return redirect("/")
+     except:
+        return redirect('/')
 
-# can also assign ID's to each user account and delete them via ID
 @app.get('/deactivate_account')
 def deactivate_account():
-    return render_template('deactivate_account.html')
+    try:
+        user = session['user']
+        return render_template('deactivate_account.html', user=user)
+    except:
+        return render_template('sign_in.html')
+
+#TODO:
+#Needs to delete user from here through the yes if statement
+@app.post('/deactivate_account')
+def deactivate():
+    answer = str(request.form.get('answer'))
+    if answer == 'Yes':
+        return redirect('/')
+    elif answer == 'No':
+        return redirect('/my_account')
 
 @app.get('/report_post')
 def report_post():    
@@ -149,8 +148,6 @@ def report_post_email():
     except:
         abort(400)
 
-#NOTE need to add a connection between flask and html form following the week of 3/29/23
-
 @app.get('/items')
 def list_all_items():
     all_items = item_repository_singleton.get_all_items()
@@ -165,11 +162,11 @@ def get_single_item(item_id):
 def create_item():
     user = session['user']
     seller = user.get('username')
-    item_name = request.form.get('item_name')
+    item_name = request.form.get('item_name').title()
     price = request.form.get('price', type = float)
-    category = request.form.get('category')
+    category = request.form.get('category').title()
     description = request.form.get('description')
-    condition = request.form.get('condition')
+    condition = request.form.get('condition').title()
     if item_name == '' or price < 0 or price == 0 or category == '' or description == '' or condition == '':
         abort(400)
     created_item = item_repository_singleton.create_item(item_name, price, category, description, condition, seller)
@@ -196,8 +193,8 @@ def signup_page():
 
 @app.post('/signup')
 def signup_form():    
-    new_fname = str(request.form.get('fname'))
-    new_lname = str(request.form.get('lname'))
+    new_fname = str(request.form.get('fname').title())
+    new_lname = str(request.form.get('lname').title())
     new_email = str(request.form.get('email'))
     new_user = str(request.form.get('username'))
     new_pass = str(request.form.get('user_pass'))
@@ -226,7 +223,11 @@ def signup_form():
 # create update user page
 @app.get('/update_account')
 def update_page():
-    return render_template('update_account.html')
+    try:
+        user = session['user']
+        return render_template('update_account.html')
+    except:
+        return render_template('sign_in.html')
 
 @app.post('/update_account')
 def update_form():
