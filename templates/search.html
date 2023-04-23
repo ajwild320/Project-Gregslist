@@ -9,7 +9,8 @@
 {% endblock %}
 
 {% block body %}
-    <h3 style="margin-left: -4rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 50px;">Search by Name:</h1>
+<div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
+    <h3 class ="mt-3 fs-1 fw-bold">Search by Name:</h1>
     <form action="/items/search" method="get" class="mb-5"> 
         <div class="input-group">
             <input type="text" name="name" id="name" class="form-control" required=True>
@@ -18,9 +19,11 @@
             </div>
         </div>
     </form>
+</div>
 
     {% if search_query != '' %}
     {% if item|length != 0 %}
+    <div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
     <table class="table">
     <thead>
         <tr>
@@ -41,8 +44,11 @@
         {% endfor %}
     </tbody>
     </table>
+    </div>
     {% else %}
-    <p>No items found</p>
+    <div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
+        <p class="fw-bold fs-3">No items found with that name. Try another name or visit the listings page to browse.</p>
+    </div>
     {% endif %}
     {% endif %}
 {% endblock %}
