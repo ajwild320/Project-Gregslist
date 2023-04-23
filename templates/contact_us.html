@@ -1,44 +1,44 @@
 {% extends '_layout.html' %}
 
 {% block title %}
-    Contact us page
+  Contact us page
 {% endblock %}
 
 {% block content %}
-    <h1 style="padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 60px;">Contact Us</h1> 
+  <h1 style="padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 60px;">Contact Us</h1> 
 {% endblock %}
 
 {% block body %}
-    <h1 style="margin-left: -3rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 50px;">Reach Out</h1>
-
-    <form method="post" action='/contact_us_email' style="margin-left: -3rem; padding-right: 45rem;">
+  <h1 style="padding-top: 1rem; padding-bottom: 2rem;"class="text-center fw-bold">Reach Out</h1>
+  <div class="bg-light w-50 mx-auto p-3 mt-3 mb-5">
+    <form method="post" action='/contact_us_email'>
+      <div class="px-4">
         <div class="form-group">
-          <label style="font-size: 30px; font-weight: 600; margin-bottom: 4px;" for="exampleFormControlInput1">Name:</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" name="name" placeholder="Name">
+          <label for="formGroupExampleInput" class="mt-5 fs-3 fw-bold">Name:</label>
+          <input type="text" class="form-control mt-1" id="formGroupExampleInput" name="name" placeholder="Name">
         </div>
         
         <div class="form-group">
-          <label style="font-size: 30px; font-weight: 600; margin-bottom: 4px;" for="exampleFormControlInput1">Email:</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" name="email" placeholder="your_email@domain.com">
+          <label for="formGroupExampleInput" class="mt-3 fs-3 fw-bold">Email:</label>
+          <input type="text" class="form-control mt-1" id="formGroupExampleInput" name="email" placeholder="email@domain.com">
         </div>
-
+        
         <div class="form-group">
-          <label style="font-size: 30px; font-weight: 600; margin-bottom: 4px;" for="exampleFormControlTextarea1">Message:</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" name="reason" rows="5"></textarea>
+          <label for="formGroupExampleInput" class="mt-3 fs-3 fw-bold">Message:</label>
+          <input type="text" class="form-control mt-1" id="formGroupExampleInput" name="reason" placeholder="Your Message">
         </div>
+      </div>
+      <div class="text-center"><button type="submit" class="btn btn-lg btn-primary mt-5 mb-4" id="button">Submit</button></div> 
+    </form>
+  </div>
 
-        <div style="padding-top: 1rem; padding-bottom: 1rem;">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
-
-      <div style="margin-left: -3rem; font-weight: 700;">
-      <p1>
-      We can also be reached at: <br>
-      9201 University City Blvd, Charlotte, NC 28223 <br>
-      Wooward Hall, building code 0056 <br>
-      Or directly at <br>
-      gregslist.customer.service@gmail.com <br>
-      </p1>
-    </div>
+  <div class="p-3 mt-3 mb-3">
+    <p1 class="text-left fw-bold">
+    We can also be reached at: <br>
+    9201 University City Blvd, Charlotte, NC 28223 <br>
+    Wooward Hall, building code 0056 <br>
+    Or directly at <br>
+    gregslist.customer.service@gmail.com <br>
+    </p1>
+  </div>
 {% endblock %}
