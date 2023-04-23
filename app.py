@@ -112,12 +112,23 @@ def logout():
      except:
         return redirect('/')
 
-#TODO
-#once database is created, use the username to delete from database
-# can also assign ID's to each user account and delete them via ID
 @app.get('/deactivate_account')
 def deactivate_account():
-    return render_template('deactivate_account.html')
+    try:
+        user = session['user']
+        return render_template('deactivate_account.html', user=user)
+    except:
+        return render_template('sign_in.html')
+
+#TODO:
+#Needs to delete user from here through the yes if statement
+@app.post('/deactivate_account')
+def deactivate():
+    answer = str(request.form.get('answer'))
+    if answer == 'Yes':
+        return redirect('/')
+    elif answer == 'No':
+        return redirect('/my_account')
 
 @app.get('/report_post')
 def report_post():    
@@ -136,8 +147,6 @@ def report_post_email():
         return render_template('home.html')
     except:
         abort(400)
-
-#NOTE need to add a connection between flask and html form following the week of 3/29/23
 
 @app.get('/items')
 def list_all_items():
