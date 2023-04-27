@@ -23,6 +23,12 @@ class ItemRepository:
     def search_items_name(self, item_name):
         item = Item.query.filter(Item.item_name.ilike(item_name)).all()
         return item
+    
+    def search_items_category(self,category):
+        item = Item.query.filter(Item.category.ilike(category)).all()
+        # item = Item.query.filter(Item.category).all()
+        return item
+        # return Item.query.all()        # return Item.query.filter(Item.category.ilike(category)).all()
 
 
 # Singleton to be used in other modules
