@@ -141,17 +141,17 @@ def report_post():
 @app.post('/report_post_email')
 def report_post_email():
     try:
-        msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com'])
-        msg.body = request.form.get("reason")
+        user = session['user']
+        reporter_fname = user.get('first_name')
+        reporter_lname = user.get('last_name')
+        reporter_email = user.get('email')
+        msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com', reporter_email])
+        reason = request.form.get("reason")
+        msg.body = "{} {} is reaching out. They can be contacted back at {} if further details are needed. They are reporting post {} for the reason(s) of: ' {}'".format(reporter_fname, reporter_lname, reporter_email, 'PLACEHOLDER', reason)
         mail.send(msg)
         return render_template('home.html')
     except:
         abort(400)
-
-@app.get('/items')
-def list_all_items():
-    all_items = item_repository_singleton.get_all_items()
-    return render_template('', list_items_active=True, items=all_items)
 
 @app.get('/items/<int:item_id>')
 def get_single_item(item_id):
