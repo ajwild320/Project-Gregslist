@@ -172,6 +172,41 @@ def create_item():
     created_item = item_repository_singleton.create_item(item_name, price, category, description, condition, seller)
     return redirect(f'/items/{created_item.item_id}')
 
+@app.get('/listings')
+def display_all_listings():
+    if 'user' in session:
+        user = session['user']
+        # name = request.args.get('name', '')
+        # if name != '':
+            # found_items = item_repository_singleton.search_items_name(name)
+        return render_template('listings.html')
+    else:
+        return render_template('sign_in.html')
+
+@app.get('/listings/<id>')
+def get_category(id):
+    print(id)
+    if 'user' in session:
+        cat_name = id
+        found_items_cat = []
+        found_items_cat = item_repository_singleton.search_items_category(cat_name)
+        return render_template('listings.html', search_active=True,items=found_items_cat)
+    else:
+        return render_template('sign_in.html')
+
+    try:
+        user = session['user']
+        # cat_name = id
+        cat_name = "saw"
+        found_items_cat = []
+        found_items_cat = item_repository_singleton.search_items_name(cat_name)
+                    
+
+        return render_template('listings.html', search_active=True,items=found_items_cat)
+    except:
+        return render_template('sign_in.html')
+
+
 @app.get('/items/search')
 def search_items_by_name():
     try:

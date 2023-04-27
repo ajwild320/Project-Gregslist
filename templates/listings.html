@@ -1,0 +1,79 @@
+{% extends '_layout.html' %}
+
+{% block title %}
+    Home page
+{% endblock %}
+
+{% block content %}
+    <h1 style="padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 60px;">Gregslist</h1> 
+{% endblock %}
+
+{% block body %}
+    <h1 style="margin-left: -4rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 50px;">Listing page</h1>
+    <!-- <button id="tools"></button> -->
+    <div class="row">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark mx-3">
+            
+            <div class="collapse navbar-collapse align-items-center justify-content-center" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto overflow-auto ">
+                
+                <li class="nav-item">
+                <a class="nav-link" href="/listings/tools">Tools</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/listings/auto">Auto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/listings/fashion">Fashion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/listings/electronics">Electronics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/listings/toys">Toys</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/listings/beauty">Beauty</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/listings/hygiene">Hygiene</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/listings/household">Household</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/listings/misc">Misc</a>
+                </li>
+            </ul>
+            </div>
+        </nav>
+        {% if items|length != 0 %}  
+        <div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
+            <table class="table">
+            <thead>
+                <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Condition</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td><a href="/items/{{ item.item_id }}">{{ item.item_name }}</a></td>
+                    <td>${{ item.price }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.condition }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            </div>
+            {% endif %}
+    </div>
+    
+
+
+
+{% endblock %}
