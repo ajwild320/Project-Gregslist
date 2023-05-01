@@ -130,28 +130,30 @@ def deactivate():
     elif answer == 'No':
         return redirect('/my_account')
 
-@app.get('/report_post')
-def report_post():    
+@app.get('/report_post/<int:item_id>')
+def report_post(item_id):    
     try:
         user = session['user']
-        return render_template('report_post.html')
+        single_item = item_repository_singleton.get_item_by_id(item_id)
+        return render_template('report_post.html', item=single_item)
     except:
         return render_template('sign_in.html')
 
-@app.post('/report_post_email')
-def report_post_email():
+@app.post('/report_post_email/<int:item_id>')
+def report_post_email(item_id):
     try:
-        msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com'])
-        msg.body = request.form.get("reason")
+        user = session['user']
+        id = item_id
+        reporter_fname = user.get('first_name')
+        reporter_lname = user.get('last_name')
+        reporter_email = user.get('email')
+        msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com', reporter_email])
+        reason = request.form.get("reason")
+        msg.body = "{} {} is reaching out. They can be contacted back at {} if further details are needed. They are reporting post #{} for the reason(s) of: ' {}'".format(reporter_fname, reporter_lname, reporter_email, id, reason)
         mail.send(msg)
         return render_template('home.html')
     except:
         abort(400)
-
-@app.get('/items')
-def list_all_items():
-    all_items = item_repository_singleton.get_all_items()
-    return render_template('', list_items_active=True, items=all_items)
 
 @app.get('/items/<int:item_id>')
 def get_single_item(item_id):
