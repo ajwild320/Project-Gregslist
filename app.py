@@ -137,28 +137,30 @@ def deactivate():
     elif answer == 'No':
         return redirect('/my_account')
 
-@app.get('/report_post')
-def report_post():    
+@app.get('/report_post/<int:item_id>')
+def report_post(item_id):    
     try:
         user = session['user']
-        return render_template('report_post.html')
+        single_item = item_repository_singleton.get_item_by_id(item_id)
+        return render_template('report_post.html', item=single_item)
     except:
         return render_template('sign_in.html')
 
-@app.post('/report_post_email')
-def report_post_email():
+@app.post('/report_post_email/<int:item_id>')
+def report_post_email(item_id):
     try:
-        msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com'])
-        msg.body = request.form.get("reason")
+        user = session['user']
+        id = item_id
+        reporter_fname = user.get('first_name')
+        reporter_lname = user.get('last_name')
+        reporter_email = user.get('email')
+        msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com', reporter_email])
+        reason = request.form.get("reason")
+        msg.body = "{} {} is reaching out. They can be contacted back at {} if further details are needed. They are reporting post #{} for the reason(s) of: ' {}'".format(reporter_fname, reporter_lname, reporter_email, id, reason)
         mail.send(msg)
         return render_template('home.html')
     except:
         abort(400)
-
-@app.get('/items')
-def list_all_items():
-    all_items = item_repository_singleton.get_all_items()
-    return render_template('', list_items_active=True, items=all_items)
 
 @app.get('/items/<int:item_id>')
 def get_single_item(item_id):
@@ -178,6 +180,41 @@ def create_item():
         abort(400)
     created_item = item_repository_singleton.create_item(item_name, price, category, description, condition, seller)
     return redirect(f'/items/{created_item.item_id}')
+
+@app.get('/listings')
+def display_all_listings():
+    if 'user' in session:
+        user = session['user']
+        # name = request.args.get('name', '')
+        # if name != '':
+            # found_items = item_repository_singleton.search_items_name(name)
+        return render_template('listings.html')
+    else:
+        return render_template('sign_in.html')
+
+@app.get('/listings/<id>')
+def get_category(id):
+    print(id)
+    if 'user' in session:
+        cat_name = id
+        found_items_cat = []
+        found_items_cat = item_repository_singleton.search_items_category(cat_name)
+        return render_template('listings.html', search_active=True,items=found_items_cat)
+    else:
+        return render_template('sign_in.html')
+
+    try:
+        user = session['user']
+        # cat_name = id
+        cat_name = "saw"
+        found_items_cat = []
+        found_items_cat = item_repository_singleton.search_items_name(cat_name)
+                    
+
+        return render_template('listings.html', search_active=True,items=found_items_cat)
+    except:
+        return render_template('sign_in.html')
+
 
 @app.get('/items/search')
 def search_items_by_name():
