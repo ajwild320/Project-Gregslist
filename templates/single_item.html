@@ -16,13 +16,8 @@
         <h1 class="mt-5 fs-3 fw-bold">Item Name:</h1>
         <h3 class="fw-bold">{{ item.item_name }}</h3>
     
-<<<<<<< HEAD
     <h1 class="mt-5 fs-3 fw-bold">Price:</h1>
     <h3 class="fw-bold">${{ item.price }}</h3>
-=======
-        <h1 class="mt-5 fs-3 fw-bold"">Price:</h1>
-        <h3 class="fw-bold">${{ item.price }}</h3>
->>>>>>> d0ece5521973cb9d7088ee5bcba8d5901503a602
     
         <h1 class="mt-5 fs-3 fw-bold">Description:</h1>
         <h3 class="fw-bold">{{ item.description }}</h3>
@@ -37,6 +32,12 @@
             <button type="submit" class="btn btn-lg btn-primary mt-3 mb-3" id="button">
                 <a href="/items/search" class="btn btn-primary" role="button">Back to Item Search</a>
             </button>
+        </div>
+
+        <div class="text-center">
+            <form action="{{ url_for('fav_list_add_fav', item_id=item.item_id) }}" method="POST">
+                <button type="submit" class="btn btn-danger">Like</button>
+            </form>
         </div>
     </div>
 {% endblock %}
