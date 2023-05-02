@@ -38,3 +38,14 @@ class users(db.Model):
     
     def __repr__(self) -> str:
         return f'users(first_name = {self.first_name}, last_name = {self.last_name}, username = {self.username}, user_password = {self.user_password}, user_email = {self.user_email})'
+
+class favorites_list(db.Model):
+    username = db.Column(db.String(255), nullable = False, foreign_key = True, primary_key = True)
+    item_id = db.Column(db.Integer, nullable = False, foreign_key = True, primary_key = True)
+
+    def __init__(self, username, item_id) -> None:
+        self.username = username
+        self.item_id = item_id
+    
+    def __repr__(self) -> str:
+        return f'favorites_list(username = {self.username}, item_id = {self.item_id})'

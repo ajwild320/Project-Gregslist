@@ -1,0 +1,41 @@
+{% extends '_layout.html' %}
+
+{% block title %}
+Home page
+{% endblock %}
+
+{% block content %}
+  <div class="mt-2 mb-4  mx-3">
+      <h1 style="font-size: 60px;">Favorites Page</h1>
+  </div>
+{% endblock %}
+
+{% block body %}
+  <h1>Favorites List:</h1>
+  {% if favorites %}
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Item ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for favorite in favorites %}
+          <tr>
+            <td>{{ favorite.username }}</td>
+            <td><a href="{{ url_for('get_single_item', item_id=favorite.item_id) }}">{{ favorite.item_id }}</a></td>
+            <td>
+            <form action="{{ url_for('fav_list_delete_fav', item_id=favorite.item_id) }}" method="POST">
+              <button type="submit" class="btn btn-danger">Remove</button>
+            </form>
+          </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Your favorites list is empty.</p>
+    <p>Add some favorites!</p>
+  {% endif %}
+{% endblock %}

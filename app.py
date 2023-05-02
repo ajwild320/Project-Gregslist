@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, redirect, abort, session
+from flask import Flask, render_template, request, redirect, abort, session, url_for
 from datetime import datetime
 from flask_mail import Mail, Message
-from src.models import db, Item,users
+from src.models import db, Item, users, favorites_list
 from src.repositories.item_repository import item_repository_singleton
 from dotenv import load_dotenv
 from src.repositories.user_repository import user_repository_singleton
+from src.repositories.favorites_repository import favorites_repository_singleton
 from security import bcrypt
 import os
 load_dotenv()
@@ -120,13 +121,19 @@ def deactivate_account():
     except:
         return render_template('sign_in.html')
 
-#TODO:
+
 #Needs to delete user from here through the yes if statement
 @app.post('/deactivate_account')
 def deactivate():
     answer = str(request.form.get('answer'))
     if answer == 'Yes':
-        return redirect('/')
+    
+        user = session['user']
+        username = user.get('username')
+        user_repository_singleton.delete_user(username)
+        del session['user']
+        return redirect("/signup")
+    
     elif answer == 'No':
         return redirect('/my_account')
 
@@ -240,3 +247,40 @@ def user_create_listing_page():
         return render_template('create_listing.html')
     except:
         return render_template('sign_in.html')    
+
+# show favorites list page
+@app.get('/favorites_list_fav')    
+def fav_list():
+    user = session['user']
+    username = user.get('username')
+    favorites = favorites_repository_singleton.get_all_favorites(username)  # get the list of favorites for the current user
+    return render_template('favorites_list_fav.html', favorites=favorites)
+    
+# add favorite to favorites list based on user session and item id of currently selected item
+@app.post('/favorites_list_fav/<int:item_id>')
+def fav_list_add_fav(item_id):
+    user = session['user']
+    username = user.get('username')
+    favorites = favorites_repository_singleton.get_all_favorites(username)
+
+    # uses for loop to check if item is already in favorites list, if it is then
+    # it is not added to favorites list and the redirect returns the user to the
+    # listing page they were on when they tried to add the item to favorites again.
+    for favorite in favorites:
+        if item_id == favorite.item_id:
+            return redirect(request.referrer)
+
+    single_item =item_repository_singleton.get_item_by_id(item_id)
+    favorites_repository_singleton.insert_favorite(username, single_item.item_id)
+
+    return redirect(url_for('fav_list'))
+
+# remove favorite from favorites list based on user session and item id of selected item
+@app.post('/favorites_list_fav/delete/<int:item_id>')
+def fav_list_delete_fav(item_id):
+    user = session['user']
+    username = user.get('username')
+    single_item =item_repository_singleton.get_item_by_id(item_id)
+    favorites_repository_singleton.delete_favorite(username, single_item.item_id)
+
+    return redirect(url_for('fav_list'))
