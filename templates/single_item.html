@@ -33,5 +33,11 @@
                 <a href="/items/search" class="btn btn-primary" role="button">Back to Item Search</a>
             </button>
         </div>
+
+        <div class="text-center">
+            <form action="{{ url_for('fav_list_add_fav', item_id=item.item_id) }}" method="POST">
+                <button type="submit" class="btn btn-danger">Like</button>
+            </form>
+        </div>
     </div>
 {% endblock %}
