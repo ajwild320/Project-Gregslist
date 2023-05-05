@@ -9,7 +9,31 @@ Single item result page
 {% endblock %}
 
 {% block body %}
-<div class="bg-light w-50 mx-auto p-3 mt-3 mb-5">
+
+<div class="item-info">
+    <h2>Seller: {{ item.username }}</h2>
+    <!-- <h2>Seller: {{ item.username }}</h2> -->
+    <div class="grid-container">
+        <div><strong>Item:</strong></div>
+        <div>{{ item.item_name }}</div>
+        <div><strong>Description:</strong></div>
+        <div>{{ item.description }}</div>
+        <div><strong>Condition:</strong></div>
+        <div>{{ item.condition }}</div>
+        <div><strong>Price:</strong></div>
+        <div><span class="price">${{ item.price }}</span></div>
+    </div>
+    <div class="buttons">
+        <button href="/report_post/{{item.item_id}}" class="report-btn" role="button">Report</button>
+        <button class="interested-btn">Interested</button>
+        <form action="{{ url_for('fav_list_add_fav', item_id=item.item_id) }}" method="POST">
+            <button type="submit" class="like-btn">Like</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- <div class="bg-light w-50 mx-auto p-3 mt-3 mb-5">
     <h1 class="mt-5 fs-3 fw-bold">Seller's Username:</h1>
     <h3 class="fw-bold">{{ item.username }}</h3>
 
@@ -39,7 +63,11 @@ Single item result page
             <button type="submit" class="btn btn-danger">Like</button>
         </form>
     </div>
-</div>
+
+
+
+    
+</div> -->
 
 <div class="rounded bg-secondary mx-auto w-75">
     <div class="form-group p-3 row">
