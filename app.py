@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect, abort, session, url_for
 from datetime import datetime
 from flask_mail import Mail, Message
-from src.models import db, Item, users, favorites_list
+from src.models import db, Item, users, favorites_list, comments
 from src.repositories.item_repository import item_repository_singleton
 from dotenv import load_dotenv
 from src.repositories.user_repository import user_repository_singleton
 from src.repositories.favorites_repository import favorites_repository_singleton
+from src.repositories.comments_repository import comments_repository_singleton
 from security import bcrypt
 import os
 load_dotenv()
@@ -295,19 +296,6 @@ def get_category(id):
     else:
         return render_template('sign_in.html')
 
-    try:
-        user = session['user']
-        # cat_name = id
-        cat_name = "saw"
-        found_items_cat = []
-        found_items_cat = item_repository_singleton.search_items_name(cat_name)
-                    
-
-        return render_template('listings.html', search_active=True,items=found_items_cat)
-    except:
-        return render_template('sign_in.html')
-
-
 @app.get('/items/search')
 def search_items_by_name():
     try:
@@ -415,3 +403,43 @@ def fav_list_delete_fav(item_id):
     favorites_repository_singleton.delete_favorite(username, single_item.item_id)
 
     return redirect(url_for('fav_list'))
+
+# get all comments for a single item
+# possible change: /items/<int:item_id> <-------> old: /single_item/<int:item_id>
+@app.get('/single_item/<int:item_id>')
+def get_all_comments(item_id):
+    single_item = item_repository_singleton.get_item_by_id(item_id)
+    comments = comments_repository_singleton.get_all_comments_by_item_id(single_item.item_id)
+
+    return render_template('single_item.html', item=single_item, comments=comments)
+
+# user adds comment to a single item's comments list
+@app.post('/single_item/<int:item_id>')
+def add_comment(item_id):
+    user = session['user']
+    username = user.get('username')
+    single_item = item_repository_singleton.get_item_by_id(item_id)
+    comment = request.form.get('comment')
+
+    if comment == '' or comment == None:
+        return redirect(request.referrer)
+    
+    comments_repository_singleton.insert_comment(username, single_item.item_id, comment)
+    return redirect(url_for('get_all_comments', item_id=item_id))
+
+# delete a single comment from a single item's comments list
+@app.post('/single_item/delete/<int:comment_id>')
+def remove_comment(comment_id):
+    comment_id = request.form.get('comment_id')
+    
+    comments_repository_singleton.delete_comment(comment_id)
+    return redirect(request.referrer)
+
+# update a single comment from the comments list of any given item
+@app.post('/single_item/update/<int:comment_id>')
+def update_comment(comment_id):
+    comment = request.form.get('new_comment')
+    comment_id = request.form.get('comment_id')
+
+    comments_repository_singleton.update_comment(comment_id, comment)
+    return redirect(request.referrer)
