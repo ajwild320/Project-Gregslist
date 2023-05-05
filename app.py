@@ -10,7 +10,7 @@ from security import bcrypt
 import os
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='my_static_folder')
 
 #DB connection and setup
 db_user = os.getenv('DB_USER')
