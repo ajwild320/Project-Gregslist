@@ -62,7 +62,7 @@
                 {% for item in items %}
                 <tr>
                     <td><a href="/items/{{ item.item_id }}">{{ item.item_name }}</a></td>
-                    <td>${{ item.price }}</td>
+                    <td>${{ "%.2f" | format(item.price) }}</td>
                     <td>{{ item.description }}</td>
                     <td>{{ item.condition }}</td>
                 </tr>

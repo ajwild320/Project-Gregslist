@@ -17,7 +17,7 @@
         <h3 class="fw-bold">{{ item.item_name }}</h3>
     
     <h1 class="mt-5 fs-3 fw-bold">Price:</h1>
-    <h3 class="fw-bold">${{ item.price }}</h3>
+    <h3 class="fw-bold">${{ "%.2f" | format(item.price) }}</h3>
     
         <h1 class="mt-5 fs-3 fw-bold">Description:</h1>
         <h3 class="fw-bold">{{ item.description }}</h3>

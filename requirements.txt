@@ -1,4 +1,5 @@
 attrs==22.2.0
+autopep8==2.0.0
 bcrypt==4.0.1
 blinker==1.5
 certifi==2022.12.7
@@ -10,6 +11,7 @@ Flask-Bcrypt==1.0.1
 Flask-Mail==0.9.1
 Flask-SQLAlchemy==3.0.3
 greenlet==2.0.2
+gunicorn==20.1.0
 idna==3.4
 iniconfig==2.0.0
 itsdangerous==2.1.2
@@ -19,10 +21,12 @@ MarkupSafe==2.1.2
 packaging==23.0
 pluggy==1.0.0
 psycopg2==2.9.6
+pycodestyle==2.10.0
 pytest==7.2.2
 python-dotenv==1.0.0
 requests==2.28.2
 SQLAlchemy==2.0.9
+tomli==2.0.1
 typing_extensions==4.5.0
 urllib3==1.26.15
 Werkzeug==2.2.3
