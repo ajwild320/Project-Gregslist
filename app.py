@@ -181,6 +181,40 @@ def create_item():
     created_item = item_repository_singleton.create_item(item_name, price, category, description, condition, seller)
     return redirect(f'/items/{created_item.item_id}')
 
+@app.get('/items/my_items/<username>')
+def my_items(username):
+    user = session['user']
+    username = user.get('username')
+    user_item = item_repository_singleton.get_all_items()
+    return render_template('my_listings.html', item=user_item, username=username)
+
+@app.get('/items/delete/<int:item_id>')
+def delete_item_form(item_id):
+    user = session['user']
+    user_item = item_repository_singleton.get_item_by_id(item_id)
+    return render_template('delete_item.html', user=user, item=user_item)
+
+@app.post('/items/delete/<int:item_id>')
+def delete_item(item_id):
+    user = session['user']
+    answer = str(request.form.get('answer'))
+    if answer == 'Yes':
+        item_repository_singleton.delete_item(item_id)
+        return redirect('/my_account')
+    elif answer == 'No':
+        return redirect('/my_account')
+    
+@app.get('/items/update/<int:item_id>')
+def update_item_form(item_id):
+    user = session['user']
+    user_item = item_repository_singleton.get_item_by_id(item_id)
+    return render_template('update_item.html', user=user, item=user_item)
+
+@app.post('/items/update/<int:item_id>')
+def update_item(item_id):
+    user = session['user']
+    return redirect('/my_account')
+
 @app.get('/listings')
 def display_all_listings():
     if 'user' in session:
@@ -243,8 +277,10 @@ def signup_form():
     new_user = str(request.form.get('username'))
     new_pass = str(request.form.get('user_pass'))
 
-    if not new_fname or not new_lname or not new_email or not new_user or not new_pass:
-        abort(400)
+    if not new_fname or not new_lname or not new_email or not new_user or not new_pass\
+            or new_fname.strip() == '' or new_lname.strip() == '' or new_email.strip() == '' or new_user.strip() == '' or new_pass.strip() == ''\
+            or '@' not in new_email:
+        return redirect("/signup")
 
     new_pass = bcrypt.generate_password_hash(new_pass).decode()
 
