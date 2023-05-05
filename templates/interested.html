@@ -1,0 +1,41 @@
+{% extends '_layout.html' %}
+
+{% block title %}
+    Interested in item page
+{% endblock %}
+
+{% block content %}
+    <h1 style="padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 60px;">Looks like you're interested</h1> 
+{% endblock %}
+
+{% block body %}
+    <div class="bg-light w-50 mx-auto p-3 mt-3 mb-5">
+        <form method="post" action="/item/interested/{{item.item_id}}">
+            <div class="mt-4">
+                <label for="formselectcondition" style="min-width: 100%" class="fs-3 fw-bold mt-4">More information on:</label>
+                <div class="form-check form-check-inline mt-2">
+                    <input class="form-check-input" type="radio" name="info" id="inlineRadio1"
+                        value="Price Negotiation">
+                    <label class="form-check-label" for="inlineRadio1">Price Negotiation</label>
+                </div>
+                <div class="form-check form-check-inline mt-2">
+                    <input class="form-check-input" type="radio" name="info" id="inlineRadio1"
+                        value="Dimensions">
+                    <label class="form-check-label" for="inlineRadio1">Dimensions</label>
+                </div>
+                <div class="form-check form-check-inline mt-2">
+                    <input class="form-check-input" type="radio" name="info" id="inlineRadio1"
+                        value="Pictures">
+                    <label class="form-check-label" for="inlineRadio1">Pictures</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="formGroupExampleInput" class="mt-3 fs-3 mb-4 fw-bold">Message:</label>
+                <textarea class="form-control" id="reason" name="message" rows="5"></textarea>
+            </div>
+
+        <button type="submit" class="btn btn-lg btn-primary mt-5 mb-4" id="button">Submit</button></div> 
+        </form>
+    </div>
+{% endblock %}

@@ -16,6 +16,10 @@ class UserRepository:
     def get_user_by_id(self, user_id):
         my_user = users.query.get(user_id) 
         return my_user
+    
+    def get_user_by_username(self, username):
+        my_user = users.query.get(username) 
+        return my_user
 
     def change_email(self, user_id, email, old_user, old_pass):
         if self.check_info(user_id, old_user, old_pass):
