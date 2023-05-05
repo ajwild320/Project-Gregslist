@@ -1,0 +1,41 @@
+{% extends '_layout.html' %}
+
+{% block title %}
+    My Listings page
+{% endblock %}
+
+{% block content %}
+    <h1 style="padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 60px;">My Listings</h1> 
+{% endblock %}
+
+{% block body %}
+    <div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
+    <table class="table">
+    <thead>
+        <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Condition</th>
+        <th>Update</th>
+        <th>Delete</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in item %}
+        {% if username == item.username %}
+        <tr>
+            <td>{{ item.item_name }}</td>
+            <td>${{ item.price }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.condition }}</td>
+            <td><a href='/items/update/{{item.item_id}}'>Update</a></td>
+            <td><a href='/items/delete/{{item.item_id}}'>Delete</a></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+    </table>
+    </div>
+{% endblock %}
