@@ -173,9 +173,9 @@ def create_item():
     seller = user.get('username')
     item_name = request.form.get('item_name').title()
     price = request.form.get('price', type = float)
-    category = request.form.get('category').title()
+    category = request.form.get('category')
     description = request.form.get('description')
-    condition = request.form.get('condition').title()
+    condition = request.form.get('condition')
     if item_name == '' or price < 0 or price == 0 or category == '' or description == '' or condition == '':
         abort(400)
     created_item = item_repository_singleton.create_item(item_name, price, category, description, condition, seller)
@@ -212,8 +212,45 @@ def update_item_form(item_id):
 
 @app.post('/items/update/<int:item_id>')
 def update_item(item_id):
-    user = session['user']
-    return redirect('/my_account')
+        user = session['user']
+        existing_item = item_repository_singleton.get_item_by_id(item_id)
+
+        seller = user.get('username')
+        new_item_name = request.form.get('item_name').title()
+        new_price = request.form.get('price', type = float)
+        new_category = request.form.get('category')
+        new_description = request.form.get('description')
+        new_condition = request.form.get('condition')
+        
+        if new_item_name == '' or new_item_name.strip() == '':
+            existing_item.item_name = existing_item.item_name
+        else:
+            existing_item.item_name = new_item_name
+
+        if new_price == None:
+            existing_item.price = existing_item.price
+        else:
+            existing_item.price = new_price
+        
+        if new_category == None:
+            existing_item.category = existing_item.category
+        else:
+            existing_item.category = new_category
+
+        if new_description == '' or new_description.strip() == '':
+            existing_item.description = existing_item.description
+        else:
+            existing_item.description = new_description
+
+        if new_condition == None:
+            existing_item.condition = existing_item.condition
+        else:
+            existing_item.condition = new_condition
+
+        existing_item.username = seller
+        db.session.commit()
+        return redirect('/my_account')
+    
 
 @app.get('/listings')
 def display_all_listings():
