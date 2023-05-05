@@ -24,11 +24,13 @@
         <h2 class="text-center fw-bold">Email:</h2>
         <h3 class="text-center fw-bold pb-5">{{user["email"]}}</h3>
         
+        <a href="/favorites_list_fav" class="btn btn-dark mb-3" role="button">My Favorites</a>
+        <br>
+        <a href="/items/my_items/{{user.username}}" class="btn btn-info mb-3" role="button">My Listings</a>
+        <br>
         <a href="/update_account" class="btn btn-warning mb-3" role="button">Update Account</a>
         <br>
-        <a href="/deactivate_account" class="btn btn-danger" role="button">Deactivate Account</a> <!--https://www.w3schools.com/bootstrap/bootstrap_buttons.asp how to utilize href with a button -->
+        <a href="/deactivate_account" class="btn btn-danger mb-3" role="button">Deactivate Account</a> <!--https://www.w3schools.com/bootstrap/bootstrap_buttons.asp how to utilize href with a button -->
         <br>
-        <br>
-        <a href="/favorites_list_fav" class="btn btn-dark mb-3" role="button">Show Favorites!</a>
     </div>
     {% endblock %}
