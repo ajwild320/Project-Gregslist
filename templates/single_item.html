@@ -9,33 +9,41 @@ Single item result page
 {% endblock %}
 
 {% block body %}
-<div class="bg-light w-50 mx-auto p-3 mt-3 mb-5">
+
+<div class="item-info">
+    <h2>Seller: {{ item.username }}</h2>
+    <!-- <h2>Seller: {{ item.username }}</h2> -->
+    <div class="grid-container">
+        <div><strong>Item:</strong></div>
+        <div>{{ item.item_name }}</div>
+        <div><strong>Description:</strong></div>
+        <div>{{ item.description }}</div>
+        <div><strong>Condition:</strong></div>
+        <div>{{ item.condition }}</div>
+        <div><strong>Price:</strong></div>
+        <div><span class="price">${{ item.price }}</span></div>
+    </div>
+    <div class="buttons">
+        <a href="/report_post/{{item.item_id}}" class="btn btn-danger mb-3" role="button">Report</a>
+        <a href="/item/interested/{{item.item_id}}" class="btn btn-info mb-3" role="button">Interested</a>
+        <!--<button href="/report_post/{{item.item_id}}" class="report-btn" role="button">Report</button>-->
+        <!--<button href="/item/interested/{{item.item_id}}"class="interested-btn" role="button">Interested</button>-->
+        <form action="{{ url_for('fav_list_add_fav', item_id=item.item_id) }}" method="POST">
+            <button type="submit" class="like-btn">Like</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- <div class="bg-light w-50 mx-auto p-3 mt-3 mb-5">
     <h1 class="mt-5 fs-3 fw-bold">Seller's Username:</h1>
     <h3 class="fw-bold">{{ item.username }}</h3>
 
     <h1 class="mt-5 fs-3 fw-bold">Item Name:</h1>
     <h3 class="fw-bold">{{ item.item_name }}</h3>
 
-        <h1 class="mt-5 fs-3 fw-bold">Item Name:</h1>
-        <h3 class="fw-bold">{{ item.item_name }}</h3>
-    
-        <h1 class="mt-5 fs-3 fw-bold">Price:</h1>
-        <h3 class="fw-bold">${{ item.price }}</h3>
-    
-        <h1 class="mt-5 fs-3 fw-bold">Description:</h1>
-        <h3 class="fw-bold">{{ item.description }}</h3>
-    
-        <h1 class="mt-5 fs-3 fw-bold">Condition:</h1>
-        <h3 class="fw-bold">{{ item.condition }}</h3>
-        
-        <br>
-        <a href="/report_post/{{item.item_id}}" class="btn btn-danger mb-3" role="button">Report Post</a>
-        
-        <div class="text-center">
-            <button type="submit" class="btn btn-lg btn-primary mt-3 mb-3" id="button">
-                <a href="/items/search" class="btn btn-primary" role="button">Back to Item Search</a>
-            </button>
-        </div>
+    <h1 class="mt-5 fs-3 fw-bold">Price:</h1>
+    <h3 class="fw-bold">${{ item.price }}</h3>
 
     <h1 class="mt-5 fs-3 fw-bold">Description:</h1>
     <h3 class="fw-bold">{{ item.description }}</h3>
@@ -57,7 +65,11 @@ Single item result page
             <button type="submit" class="btn btn-danger">Like</button>
         </form>
     </div>
-</div>
+
+
+
+    
+</div> -->
 
 <div class="rounded bg-secondary mx-auto w-75">
     <div class="form-group p-3 row">

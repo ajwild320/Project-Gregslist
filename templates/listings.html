@@ -1,24 +1,25 @@
 {% extends '_layout.html' %}
 
 {% block title %}
-    Home page
+Home page
 {% endblock %}
 
 {% block content %}
-    <h1 style="padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 60px;">Gregslist</h1> 
+<h1 style="padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 60px;">Gregslist</h1>
 {% endblock %}
 
 {% block body %}
-    <h1 style="margin-left: -4rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 50px;">Listing page</h1>
-    <!-- <button id="tools"></button> -->
-    <div class="row">
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark mx-3">
-            
-            <div class="collapse navbar-collapse align-items-center justify-content-center" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto overflow-auto ">
-                
+<h1 id="margintest">Listing page</h1>
+<!-- <button id="tools"></button> -->
+<div class="side-bar"></div>
+<div class="row">
+    <nav>
+
+        <div>
+            <ul id="navhead">
+
                 <li class="nav-item">
-                <a class="nav-link" href="/listings/tools">Tools</a>
+                    <a class="nav-link" href="/listings/tools">Tools</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/listings/auto">Auto</a>
@@ -45,17 +46,35 @@
                     <a class="nav-link" href="/listings/misc">Misc</a>
                 </li>
             </ul>
-            </div>
-        </nav>
-        {% if items|length != 0 %}  
-        <div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
-            <table class="table">
+        </div>
+    </nav>
+
+    <!-- <h2>t</h2>
+        <h2>t</h2>
+        <h2>t</h2>
+        <h2>t</h2>
+        <h2>t</h2>
+        <h2>t</h2>
+        <h2>t</h2>
+        <h2>t</h2>
+        <h2>t</h2>
+        <h2>t</h2>
+        <h2>t</h2>
+        <h2>t</h2>
+        <h2>t</h2>
+        <h2>t</h2> -->
+        <div style="background-color: gray; height: 1000px;" id="margintest"></div>
+    
+
+    {% if items|length != 0 %}
+    <div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
+        <table class="table">
             <thead>
                 <tr>
-                <th>Item</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Condition</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Condition</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,12 +87,9 @@
                 </tr>
                 {% endfor %}
             </tbody>
-            </table>
-            </div>
-            {% endif %}
+        </table>
     </div>
-    
-
-
+    {% endif %}
+</div>
 
 {% endblock %}

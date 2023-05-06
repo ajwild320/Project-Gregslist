@@ -1,0 +1,140 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 120px;
+    background-color: rgba(85, 169, 230, 1);
+}
+
+
+.item-info {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+    font-size: 22px;
+    background-color: white;
+}
+
+.item-info h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 150px auto;
+    grid-gap: 10px;
+}
+
+.price {
+    font-size: 24px;
+    color: #4CAF50;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.buttons button {
+    margin-right: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.buttons button:hover {
+    opacity: 0.8;
+}
+
+.report-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.interested-btn {
+    background-color: #2196F3;
+    color: white;
+}
+
+.like-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+form {
+    display: inline-block;
+}
+
+.nav-item a {
+    padding: 8px 16px;
+
+    color: #000;
+    text-decoration: none;
+    display: block;
+}
+
+.nav-item a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+.nav-item a.active {
+    background-color: #4CAF50;
+    color: white;
+
+
+}
+
+#navhead {
+    max-height: calc(100% - 100px);
+    position: fixed;
+    top: 280px;
+    left: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+
+}
+
+.side-bar {
+    /* position: fixed; */
+    position: absolute;
+    top: 280px;
+    left: 0;
+    width: 200px;
+    bottom: 50px;
+    /* Height of the footer */
+    /* background-color: #f1f1f1; */
+    background-color: #f1f1f1;
+}
+
+#margintest {
+    margin-left: 150px;
+    /* margin-right: 5%; */
+    width: calc(100% - 130px);
+}
+
+#listingstable {
+    margin-left: 98px;
+    margin-right: 10%;
+}
+
+
+footer {
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    /* Set the fixed height of the footer here */
+    background-color: #4CAF50;
+
+}

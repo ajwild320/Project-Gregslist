@@ -11,7 +11,7 @@ from security import bcrypt
 import os
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='my_static_folder')
 
 #DB connection and setup
 db_user = os.getenv('DB_USER')
@@ -254,26 +254,38 @@ def update_item(item_id):
 
 @app.get('/item/interested/<int:item_id>')
 def interested_form(item_id):
-    return render_template('interested.html')
+    user = session['user']
+    interested_item = item_repository_singleton.get_item_by_id(item_id)
+    return render_template('interested.html' ,user=user, item=interested_item)
 
 @app.post('/item/interested/<int:item_id>')
-def interested_form(item_id):
-    user = session['user']
-    id = item_id
-    interested_fname = user.get('first_name')
-    interested_lname = user.get('last_name')
-    interested_email = user.get('email')
-    requested_item = item_repository_singleton.get_item_by_id(item_id)
-    creator = requested_item.username
-    creator_info = user_repository_singleton.get_user_by_username(creator)
-    creator_email = creator_info.email
-    information = request.form.get('info')
-    user_message = request.form.get('message')
-    msg = Message('Interested in Item', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com', interested_email, creator_email])
-    msg.body = "{} {} is reaching out. They can be contacted back at {} in regards of your post {}. They would like additional information about: '{}' and they have the following message of '{}'.".format(interested_fname, interested_lname, interested_email, id, information, user_message)
-    mail.send(msg)
-    return redirect('/my_account')
-    
+def interested(item_id):
+    try:
+        user = session['user']
+        interested_fname = user.get('first_name')
+        interested_lname = user.get('last_name')
+        interested_email = user.get('email')
+
+        interested_item = item_repository_singleton.get_item_by_id(item_id)
+        seller = interested_item.username
+        interested_name = interested_item.item_name
+
+        seller_user = user_repository_singleton.get_user_by_username(seller)
+        seller_email = seller_user.user_email
+
+        info = request.form.get("info")
+        form_message = request.form.get("message")
+
+        if info == None and form_message.strip() == "":
+            return redirect('/item/interested/{}'.format(item_id))
+
+        msg = Message('Interested about your listing!', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com', interested_email, seller_email])
+        msg.body = "{} {} is reaching out. They can be contacted back at {}. They are reaching out about you product named '{}' for additional information on '{}' and in regards of '{}'".format(interested_fname, interested_lname, interested_email, interested_name, info, form_message)
+        mail.send(msg)
+        return redirect('/my_account')
+    except:
+        abort(400)
+
 @app.get('/listings')
 def display_all_listings():
     if 'user' in session:
