@@ -410,6 +410,13 @@ def add_comment(item_id):
 @app.post('/single_item/delete/<int:comment_id>')
 def remove_comment(comment_id):
     comment_id = request.form.get('comment_id')
+
+    user = session['user']
+    session_username = user.get('username')
+    comment_author = request.form.get('username')
+
+    if session_username != comment_author:
+        return "you are not the author of this comment"
     
     comments_repository_singleton.delete_comment(comment_id)
     return redirect(request.referrer)
@@ -420,5 +427,12 @@ def update_comment(comment_id):
     comment = request.form.get('new_comment')
     comment_id = request.form.get('comment_id')
 
+    user = session['user']
+    session_username = user.get('username')
+    comment_author = request.form.get('username')
+
+    if session_username != comment_author:
+        return "you are not the author of this comment"
+        
     comments_repository_singleton.update_comment(comment_id, comment)
     return redirect(request.referrer)

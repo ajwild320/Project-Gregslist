@@ -100,19 +100,24 @@ Single item result page
                         <p>{{ comment.comment }}</p>
                     </div>
                 </form>
+                {% if session['user'] and comment.username == session['user']['username'] %}
                 <form action="{{ url_for('remove_comment', comment_id=comment.comment_id) }}" method="POST">
                     <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
                     <input type="hidden" name="item_id" value="{{ item.item_id }}">
                     <input type="hidden" name="comment" value="{{ comment.comment }}">
+                    <input type="hidden" name="username" value="{{ comment.username }}">
                     <button type="submit" class="btn btn-primary btn-lg">Delete</button>
                 </form>
+                {% endif %}
                 <br>
+                {% if session['user'] and comment.username == session['user']['username'] %}
                 <button class="update-button btn btn-primary btn-lg">Update</button>
                 <div class="hidden-element" style="display: none;">
                     <form action="{{ url_for('update_comment', comment_id=comment.comment_id) }}" method="POST">
                         <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
                         <input type="hidden" name="item_id" value="{{ item.item_id }}">
                         <input type="hidden" name="comment" value="{{ comment.comment }}">
+                        <input type="hidden" name="username" value="{{ comment.username }}">
                         <div class="form-group">
                             <label class="pb-2 fs-4" for="new_comment">Updated Comment:</label>
                             <textarea class="form-control" rows="5" id="new_comment" name="new_comment"></textarea>
@@ -120,6 +125,7 @@ Single item result page
                     <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
