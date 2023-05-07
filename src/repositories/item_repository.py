@@ -30,6 +30,10 @@ class ItemRepository:
         return item
         # return Item.query.all()        # return Item.query.filter(Item.category.ilike(category)).all()
 
+    def delete_item(self, item_id):
+        db.session.delete(Item.query.get(item_id))
+        db.session.commit()
+
 
 # Singleton to be used in other modules
 item_repository_singleton = ItemRepository()

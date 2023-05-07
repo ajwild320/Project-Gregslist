@@ -15,6 +15,10 @@ class UserRepository:
     def get_user_by_email(self, email):
         my_user = users.query.filter_by(user_email=email).first() 
         return my_user
+    
+    def get_user_by_username(self, username):
+        my_user = users.query.get(username) 
+        return my_user
 
     def change_email(self, email, old_user):
         users.query.filter_by(username=old_user).first().user_email = email

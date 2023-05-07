@@ -49,3 +49,17 @@ class favorites_list(db.Model):
     
     def __repr__(self) -> str:
         return f'favorites_list(username = {self.username}, item_id = {self.item_id})'
+    
+class comments(db.Model):
+    username = db.Column(db.String(255), nullable = False, foreign_key = True)
+    item_id = db.Column(db.Integer, nullable = False, foreign_key = True)
+    comment = db.Column(db.String(500), nullable = False)
+    comment_id = db.Column(db.Integer, nullable = False, autoincrement=True, primary_key = True)
+
+    def __init__(self, username, item_id, comment) -> None:
+        self.username = username
+        self.item_id = item_id
+        self.comment = comment
+
+    def __repr__(self) -> str:
+        return f'comments(username = {self.username}, item_id = {self.item_id}, comment = {self.comment}, comment_id = {self.comment_id})'

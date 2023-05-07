@@ -1,0 +1,38 @@
+{% extends '_layout.html' %}
+
+{% block title %}
+    Remove Item
+{% endblock %}
+
+{% block content %}
+    <h1 style="font-size: 60px;">Remove Item</h1> 
+{% endblock %}
+
+{% block body %}
+<div class="bg-light w-50 mx-auto p-3 mt-3 mb-5">
+
+    <h1>Hello {{user["first_name"]}},</h1>
+    <p1 class="fw-bold">
+        Please be sure you are positive about removing this post because once a
+        post is removed, it can not be retireved again here at Gregslist.
+    </p1>
+
+    <form method="post" action='/items/delete/{{item.item_id}}'>
+      <div class="mt-4">
+        <label for="formselectcondition" style="min-width: 100%" class="fs-3 fw-bold mt-4">Are you sure?</label>
+        <div class="form-check form-check-inline mt-2">
+            <input class="form-check-input" type="radio" name="answer" id="inlineRadio1"
+                value="Yes">
+            <label class="form-check-label" for="inlineRadio1">Yes</label>
+        </div>
+        <br>
+        <div class="form-check form-check-inline mt-2">
+            <input class="form-check-input" type="radio" name="answer" id="inlineRadio1"
+                value="No">
+            <label class="form-check-label" for="inlineRadio1">No</label>
+        </div>
+    </div>
+    <div class="text-center"><button type="submit" class="btn btn-lg btn-danger mt-5 mb-4" id="button">Remove Post</button></div> 
+    </form>
+  </div>  
+{% endblock %}
