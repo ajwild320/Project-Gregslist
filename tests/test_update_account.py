@@ -70,15 +70,6 @@ def test_update_account(test_app):
     data = response.data.decode('utf-8')
     assert "Please enter your new account credentials" in data
 
-    # response = test_app.post('/update_account', data={
-    #     'email' :"newbob@gmail.com",
-    #     'username' : "newuser56789",
-    #     'user_pass' : None
-    # }, follow_redirects=True)
-    # assert response.status_code == 200
-    # data = response.data.decode('utf-8')
-    # assert "Please enter your new account credentials" in data
-
 
     response = test_app.post('/deactivate_account', data = {
         'answer' : 'Yes'
