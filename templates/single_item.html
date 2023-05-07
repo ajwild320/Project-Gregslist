@@ -24,8 +24,10 @@ Single item result page
         <div><span class="price">${{ item.price }}</span></div>
     </div>
     <div class="buttons">
-        <button href="/report_post/{{item.item_id}}" class="report-btn" role="button">Report</button>
-        <button class="interested-btn">Interested</button>
+        <a href="/report_post/{{item.item_id}}" class="btn btn-danger mb-3" role="button">Report</a>
+        <a href="/item/interested/{{item.item_id}}" class="btn btn-info mb-3" role="button">Interested</a>
+        <!--<button href="/report_post/{{item.item_id}}" class="report-btn" role="button">Report</button>-->
+        <!--<button href="/item/interested/{{item.item_id}}"class="interested-btn" role="button">Interested</button>-->
         <form action="{{ url_for('fav_list_add_fav', item_id=item.item_id) }}" method="POST">
             <button type="submit" class="like-btn">Like</button>
         </form>
