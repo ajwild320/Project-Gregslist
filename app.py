@@ -44,18 +44,16 @@ def home():
 def contact_us():
     return render_template('contact_us.html')
 
-#TODO
-#More suitable for a nonexisting user as some data could be pulled from database
-@app.post('/contact_us_email')
+@app.post('/contact_us')
 def contact_us_email():
     name = request.form.get("name")
     email = request.form.get("email")
     reason = request.form.get("reason")
-    if name.__len__() == 0 or email.__len__() == 0 or reason.__len__() == 0:
+    if name.strip() == '' or email.strip() == '' or reason.strip() == '':
         return redirect('/contact_us')
     else:
         subject_line = "{} is reaching out".format(name)
-        body = "{} is reaching out. They can be responded to at {}. They are reaching out in regards of: {}".format(name, email, reason)
+        body = "{} is reaching out. They can be responded to at {}. They are reaching out in regards of: '{}'".format(name, email, reason)
         msg = Message(subject_line, sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com', email])
         msg.body = body
         mail.send(msg)
@@ -66,7 +64,7 @@ def my_account():
     try:
         user = session['user']
         hour = datetime.now().hour
-        if hour < 11:
+        if hour > 4 and hour < 11:
             time_of_day = "Morning"
         elif hour >= 11 and hour < 17:
             time_of_day = "Afternoon"
@@ -76,8 +74,6 @@ def my_account():
     except:
         return render_template('sign_in.html')
 
-#TODO
-#fix the return once page is made
 @app.get('/sign_in')
 def to_sign_in_page():
     if 'user' not in session:
@@ -122,20 +118,18 @@ def deactivate_account():
     except:
         return render_template('sign_in.html')
 
-
-#Needs to delete user from here through the yes if statement
 @app.post('/deactivate_account')
 def deactivate():
     answer = str(request.form.get('answer'))
     if answer == 'Yes':
-    
         user = session['user']
+        print("HERE")
         username = user.get('username')
         user_repository_singleton.delete_user(username)
         del session['user']
         return redirect("/signup")
     
-    elif answer == 'No':
+    else:
         return redirect('/my_account')
 
 @app.get('/report_post/<int:item_id>')
@@ -147,7 +141,7 @@ def report_post(item_id):
     except:
         return render_template('sign_in.html')
 
-@app.post('/report_post_email/<int:item_id>')
+@app.post('/report_post/<int:item_id>')
 def report_post_email(item_id):
     try:
         user = session['user']
@@ -155,13 +149,15 @@ def report_post_email(item_id):
         reporter_fname = user.get('first_name')
         reporter_lname = user.get('last_name')
         reporter_email = user.get('email')
-        msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com', reporter_email])
         reason = request.form.get("reason")
+        if reason.strip() == '':
+            return redirect('/report_post/{}'.format(item_id))
+        msg = Message('Report Post', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com', reporter_email])
         msg.body = "{} {} is reaching out. They can be contacted back at {} if further details are needed. They are reporting post #{} for the reason(s) of: ' {}'".format(reporter_fname, reporter_lname, reporter_email, id, reason)
         mail.send(msg)
         return render_template('home.html')
     except:
-        abort(400)
+        return redirect('/report_post/{}'.format(item_id))
 
 @app.get('/items/<int:item_id>')
 def get_single_item(item_id):
@@ -177,8 +173,8 @@ def create_item():
     category = request.form.get('category')
     description = request.form.get('description')
     condition = request.form.get('condition')
-    if item_name == '' or price < 0 or price == 0 or category == '' or description == '' or condition == '':
-        abort(400)
+    if item_name.strip() == '' or price == 0 or price == None or price < 0 or category == None or description.strip() == '' or condition == None:
+        return redirect('/create_listing')
     created_item = item_repository_singleton.create_item(item_name, price, category, description, condition, seller)
     return redirect(f'/items/{created_item.item_id}')
 
@@ -191,13 +187,15 @@ def my_items(username):
 
 @app.get('/items/delete/<int:item_id>')
 def delete_item_form(item_id):
-    user = session['user']
-    user_item = item_repository_singleton.get_item_by_id(item_id)
-    return render_template('delete_item.html', user=user, item=user_item)
+    try:
+        user = session['user']
+        user_item = item_repository_singleton.get_item_by_id(item_id)
+        return render_template('delete_item.html', user=user, item=user_item)
+    except:
+        return render_template('sign_in.html')
 
 @app.post('/items/delete/<int:item_id>')
 def delete_item(item_id):
-    user = session['user']
     answer = str(request.form.get('answer'))
     if answer == 'Yes':
         item_repository_singleton.delete_item(item_id)
@@ -223,7 +221,7 @@ def update_item(item_id):
         new_description = request.form.get('description')
         new_condition = request.form.get('condition')
         
-        if new_item_name == '' or new_item_name.strip() == '':
+        if new_item_name.strip() == '':
             existing_item.item_name = existing_item.item_name
         else:
             existing_item.item_name = new_item_name
@@ -238,7 +236,7 @@ def update_item(item_id):
         else:
             existing_item.category = new_category
 
-        if new_description == '' or new_description.strip() == '':
+        if new_description.strip() == '':
             existing_item.description = existing_item.description
         else:
             existing_item.description = new_description
@@ -251,7 +249,40 @@ def update_item(item_id):
         existing_item.username = seller
         db.session.commit()
         return redirect('/my_account')
-    
+
+@app.get('/item/interested/<int:item_id>')
+def interested_form(item_id):
+    user = session['user']
+    interested_item = item_repository_singleton.get_item_by_id(item_id)
+    return render_template('interested.html' ,user=user, item=interested_item)
+
+@app.post('/item/interested/<int:item_id>')
+def interested(item_id):
+    try:
+        user = session['user']
+        interested_fname = user.get('first_name')
+        interested_lname = user.get('last_name')
+        interested_email = user.get('email')
+
+        interested_item = item_repository_singleton.get_item_by_id(item_id)
+        seller = interested_item.username
+        interested_name = interested_item.item_name
+
+        seller_user = user_repository_singleton.get_user_by_username(seller)
+        seller_email = seller_user.user_email
+
+        info = request.form.get("info")
+        form_message = request.form.get("message")
+
+        if info == None and form_message.strip() == "":
+            return redirect('/item/interested/{}'.format(item_id))
+
+        msg = Message('Interested about your listing!', sender = 'gregslist.customer.service@gmail.com', recipients = ['gregslist.customer.service@gmail.com', interested_email, seller_email])
+        msg.body = "{} {} is reaching out. They can be contacted back at {}. They are reaching out about you product named '{}' for additional information on '{}' and in regards of '{}'".format(interested_fname, interested_lname, interested_email, interested_name, info, form_message)
+        mail.send(msg)
+        return redirect('/my_account')
+    except:
+        abort(400)
 
 @app.get('/listings')
 def display_all_listings():
@@ -304,7 +335,7 @@ def signup_form():
 
     if not new_fname or not new_lname or not new_email or not new_user or not new_pass\
             or new_fname.strip() == '' or new_lname.strip() == '' or new_email.strip() == '' or new_user.strip() == '' or new_pass.strip() == ''\
-            or '@' not in new_email:
+            or '@' not in new_email or '.' not in new_email:
         return redirect("/signup")
 
     new_pass = bcrypt.generate_password_hash(new_pass).decode()
@@ -313,9 +344,11 @@ def signup_form():
     existing_user = users.query.filter_by(username = new_user).first()
     if existing_user:
         return redirect("/signup")
+    existing_user = users.query.filter_by(user_email = new_email).first()
+    if existing_user:
+        return redirect("/signup")
     
     user_repository_singleton.add_user(new_fname, new_lname, new_user, new_pass, new_email)
-
 
     session['user'] = {
         'first_name' : new_fname,
@@ -325,17 +358,41 @@ def signup_form():
     }
     return redirect('/my_account')
 
-# create update user page
 @app.get('/update_account')
 def update_page():
     try:
         user = session['user']
-        return render_template('update_account.html')
+        if user:
+            return render_template('update_account.html')
     except:
         return render_template('sign_in.html')
 
 @app.post('/update_account')
 def update_form():
+    user = session['user']
+
+    old_user = user["username"]
+    new_user = str(request.form.get('username'))
+    new_email = str(request.form.get('email'))
+    new_pass = str(request.form.get('password'))
+    print("NEW PASS " + new_pass)
+    if new_user == None or new_pass == None or user_repository_singleton.get_user_by_email(new_email) != None or user_repository_singleton.get_user_by_username(new_user) != None or new_pass == None:
+        return redirect("/update_account")
+    data = {
+        'first_name' : user['first_name'],
+        'last_name' : user['last_name'],
+        'username': new_user,
+        'email' : new_email
+    }
+    
+
+    new_pass = bcrypt.generate_password_hash(new_pass).decode()
+    user_repository_singleton.change_email(new_email, old_user)
+    user_repository_singleton.change_pass(new_pass, old_user)
+    user_repository_singleton.change_user(new_user, old_user)
+
+    session['user'] = data
+    user = session['user']
     return redirect('/my_account')
 
 @app.get('/create_listing')
