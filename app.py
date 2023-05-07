@@ -123,11 +123,13 @@ def deactivate():
     answer = str(request.form.get('answer'))
     if answer == 'Yes':
         user = session['user']
+        print("HERE")
         username = user.get('username')
         user_repository_singleton.delete_user(username)
         del session['user']
         return redirect("/signup")
-    elif answer == 'No':
+    
+    else:
         return redirect('/my_account')
 
 @app.get('/report_post/<int:item_id>')
@@ -342,6 +344,9 @@ def signup_form():
     existing_user = users.query.filter_by(username = new_user).first()
     if existing_user:
         return redirect("/signup")
+    existing_user = users.query.filter_by(user_email = new_email).first()
+    if existing_user:
+        return redirect("/signup")
     
     user_repository_singleton.add_user(new_fname, new_lname, new_user, new_pass, new_email)
 
@@ -357,12 +362,37 @@ def signup_form():
 def update_page():
     try:
         user = session['user']
-        return render_template('update_account.html')
+        if user:
+            return render_template('update_account.html')
     except:
         return render_template('sign_in.html')
 
 @app.post('/update_account')
 def update_form():
+    user = session['user']
+
+    old_user = user["username"]
+    new_user = str(request.form.get('username'))
+    new_email = str(request.form.get('email'))
+    new_pass = str(request.form.get('password'))
+    print("NEW PASS " + new_pass)
+    if new_user == None or new_pass == None or user_repository_singleton.get_user_by_email(new_email) != None or user_repository_singleton.get_user_by_username(new_user) != None or new_pass == None:
+        return redirect("/update_account")
+    data = {
+        'first_name' : user['first_name'],
+        'last_name' : user['last_name'],
+        'username': new_user,
+        'email' : new_email
+    }
+    
+
+    new_pass = bcrypt.generate_password_hash(new_pass).decode()
+    user_repository_singleton.change_email(new_email, old_user)
+    user_repository_singleton.change_pass(new_pass, old_user)
+    user_repository_singleton.change_user(new_user, old_user)
+
+    session['user'] = data
+    user = session['user']
     return redirect('/my_account')
 
 @app.get('/create_listing')

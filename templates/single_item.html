@@ -21,7 +21,7 @@ Single item result page
         <div><strong>Condition:</strong></div>
         <div>{{ item.condition }}</div>
         <div><strong>Price:</strong></div>
-        <div><span class="price">${{ item.price }}</span></div>
+        <div><span class="price">${{ "%.2f" | format(item.price) }}</span></div>
     </div>
     <div class="buttons">
         <a href="/report_post/{{item.item_id}}" class="btn btn-danger mb-3" role="button">Report</a>
