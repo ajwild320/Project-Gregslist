@@ -1,36 +1,61 @@
 {% extends '_layout.html' %}
 
 {% block title %}
-    My Account Page
+My Account Page
 {% endblock %}
 
 {% block content %}
-    <h1 style="padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 60px;">My Account</h1>
+<h1 style="padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 60px;">My Account</h1>
 {% endblock %}
 
-{% block body %}     
-    <div class="bg-light w-50 mx-auto p-3 mt-3 mb-5">
-        <h1 class="text-center fw-bold pb-3">Good {{time_of_day}} {{user["first_name"]}}!</h1>
+{% block body %}
 
-        <h2 class="text-center fw-bold ">First Name:</h2>
-        <h3 class="text-center fw-bold">{{user["first_name"]}}</h3>
 
-        <h2 class="text-center fw-bold">Last Name:</h2>
-        <h3 class="text-center fw-bold">{{user["last_name"]}}</h3>
-
-        <h2 class="text-center fw-bold">Username:</h2>
-        <h3 class="text-center fw-bold">{{user["username"]}}</h3>
-  
-        <h2 class="text-center fw-bold">Email:</h2>
-        <h3 class="text-center fw-bold pb-5">{{user["email"]}}</h3>
-        
-        <a href="/favorites_list_fav" class="btn btn-dark mb-3" role="button">My Favorites</a>
-        <br>
-        <a href="/items/my_items/{{user.username}}" class="btn btn-info mb-3" role="button">My Listings</a>
-        <br>
-        <a href="/update_account" class="btn btn-warning mb-3" role="button">Update Account</a>
-        <br>
-        <a href="/deactivate_account" class="btn btn-danger mb-3" role="button">Deactivate Account</a> <!--https://www.w3schools.com/bootstrap/bootstrap_buttons.asp how to utilize href with a button -->
-        <br>
+<div class="item-info">
+    <h2 id="profilegreeting">Good {{time_of_day}} {{user["first_name"]}}!</h2>
+    <div class="grid-container">
+        <div><strong>First Name:</strong></div>
+        <div>{{user["first_name"]}}</div>
+        <div><strong>Last Name:</strong></div>
+        <div>{{user["last_name"]}}</div>
+        <div><strong>Username:</strong></div>
+        <div>{{user["username"]}}</div>
+        <div><strong>Email:</strong></div>
+        <div>{{user["email"]}}</div>
     </div>
-    {% endblock %}
+    <div class="buttons">
+        <a href="/favorites_list_fav" class="report-btn" role="button">My Favorites</a>
+        <a href="/items/my_items/{{user.username}}" class="interested-btn">My Listings</a>
+        <a href="/update_account" class="update-btn" role="button">Update Account</a>
+        <a href="/deactivate_account" class="deactivate-btn" role="button">Deactivate </a>
+        
+    </div>
+</div>
+<!-- <h1 class="text-center fw-bold pb-3">Good {{time_of_day}} {{user["first_name"]}}!</h1>
+<div class="bg-light w-50 mx-auto p-3 mt-3 mb-5">
+    <h1 class="text-center fw-bold pb-3">Good {{time_of_day}} {{user["first_name"]}}!</h1>
+
+    <h2 class="text-center fw-bold ">First Name:</h2>
+    <h3 class="text-center fw-bold">{{user["first_name"]}}</h3>
+
+    <h2 class="text-center fw-bold">Last Name:</h2>
+    <h3 class="text-center fw-bold">{{user["last_name"]}}</h3>
+
+    <h2 class="text-center fw-bold">Username:</h2>
+    <h3 class="text-center fw-bold">{{user["username"]}}</h3>
+
+    <h2 class="text-center fw-bold">Email:</h2>
+    <h3 class="text-center fw-bold pb-5">{{user["email"]}}</h3>
+
+    <a href="/favorites_list_fav" class="btn btn-dark mb-3" role="button">My Favorites</a>
+    <br>
+    <a href="/items/my_items/{{user.username}}" class="btn btn-info mb-3" role="button">My Listings</a>
+    <br>
+    <a href="/update_account" class="btn btn-warning mb-3" role="button">Update Account</a>
+    <br>
+    <a href="/deactivate_account" class="btn btn-danger mb-3" role="button">Deactivate Account</a>
+    https://www.w3schools.com/bootstrap/bootstrap_buttons.asp how to utilize href with a button
+    <br>
+</div> -->
+
+{% endblock %}

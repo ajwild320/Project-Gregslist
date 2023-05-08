@@ -9,13 +9,13 @@
 {% endblock %}
 
 {% block body %}
-<div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
-    <h3 class ="mt-3 fs-1 fw-bold">Search by Name:</h1>
-    <form action="/items/search" method="get" class="mb-5"> 
-        <div class="input-group">
+<div id="search-container">
+    <h3 id="search-title">Search by Name:</h3>
+    <form action="/items/search" method="get" id="search-form"> 
+        <div class="input-group" id="input-group">
             <input type="text" name="name" id="name" class="form-control" required=True>
-            <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Search</button>
+            <div class>
+                <button type="submit" id="search-button">Search</button>
             </div>
         </div>
     </form>
@@ -23,25 +23,18 @@
 
     {% if search_query != '' %}
     {% if item|length != 0 %}
-    <h2>{{item|length}}</h2>
-    <div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
-    <table class="table">
-    <thead>
-        <tr>
-        <th>Item</th>
-        <th>Price</th>
-        <th>Description</th>
-        <th>Condition</th>
-        </tr>
-    </thead>
-    <tbody>
         {% for item in item %}
-        <tr>
-            <td><a href="/items/{{ item.item_id }}">{{ item.item_name }}</a></td>
-            <td>${{ item.price }}</td>
-            <td>{{ item.description }}</td>
-            <td>{{ item.condition }}</td>
-        </tr>
+        <div class="my-item-container" id="searchcenter">
+            <div class="my-item">
+                <div class="my-item-info">
+                    <h2>{{ item.item_name }}</h2>
+                    <p>Price: ${{ item.price }}</p>
+                    <p>Condition: {{ item.condition }}</p>
+                </div>
+                <button><a id="itemlink"href="/items/{{ item.item_id }}">More Info</a></button>
+            </div>
+        </div>
+
         {% endfor %}
     </tbody>
     </table>
