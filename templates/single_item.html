@@ -21,11 +21,13 @@ Single item result page
         <div><strong>Condition:</strong></div>
         <div>{{ item.condition }}</div>
         <div><strong>Price:</strong></div>
-        <div><span class="price">${{ item.price }}</span></div>
+        <div><span class="price">${{ "%.2f" | format(item.price) }}</span></div>
     </div>
     <div class="buttons">
-        <button href="/report_post/{{item.item_id}}" class="report-btn" role="button">Report</button>
-        <button class="interested-btn">Interested</button>
+        <a href="/report_post/{{item.item_id}}" class="btn btn-danger mb-3" role="button">Report</a>
+        <a href="/item/interested/{{item.item_id}}" class="btn btn-info mb-3" role="button">Interested</a>
+        <!--<button href="/report_post/{{item.item_id}}" class="report-btn" role="button">Report</button>-->
+        <!--<button href="/item/interested/{{item.item_id}}"class="interested-btn" role="button">Interested</button>-->
         <form action="{{ url_for('fav_list_add_fav', item_id=item.item_id) }}" method="POST">
             <button type="submit" class="like-btn">Like</button>
         </form>
@@ -85,6 +87,47 @@ Single item result page
 {% if comments %}
 {% for comment in comments %}
 
+<!-- <div class="rounded bg-light mx-auto w-75">
+    <div class="form-group p-3 row">
+        <div class="col">
+            <div class="position-relative justify-content-center">
+                <form action="{{ url_for('get_all_comments', item_id=item.item_id) }}" method="GET">
+                    <div class="m-0 col-8">
+                        <p class="pb-2 fs-4">{{ comment.username }} said:</p>
+                        <p>{{ comment.comment }}</p>
+                    </div>
+                </form>
+                {% if session['user'] and comment.username == session['user']['username'] %}
+                <form action="{{ url_for('remove_comment', comment_id=comment.comment_id) }}" method="POST">
+                    <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
+                    <input type="hidden" name="item_id" value="{{ item.item_id }}">
+                    <input type="hidden" name="comment" value="{{ comment.comment }}">
+                    <input type="hidden" name="username" value="{{ comment.username }}">
+                    <button type="submit" class="btn btn-primary btn-lg">Delete</button>
+                </form>
+                {% endif %}
+                <br>
+                {% if session['user'] and comment.username == session['user']['username'] %}
+                <button class="update-button btn btn-primary btn-lg">Update</button>
+                <div class="hidden-element" style="display: none;">
+                    <form action="{{ url_for('update_comment', comment_id=comment.comment_id) }}" method="POST">
+                        <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
+                        <input type="hidden" name="item_id" value="{{ item.item_id }}">
+                        <input type="hidden" name="comment" value="{{ comment.comment }}">
+                        <input type="hidden" name="username" value="{{ comment.username }}">
+                        <div class="form-group">
+                            <label class="pb-2 fs-4" for="new_comment">Updated Comment:</label>
+                            <textarea class="form-control" rows="5" id="new_comment" name="new_comment"></textarea>
+                        </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div> -->
+<br>
 <div class="position-relative justify-content-center" id="comment-container">
     <form action="{{ url_for('get_all_comments', item_id=item.item_id) }}" method="GET" id="get-comments-form">
         <div class="m-0 col-8" id="comment-content">
@@ -93,14 +136,17 @@ Single item result page
         </div>
     </form>
     <div class="button-container" id="button-container">
+        {% if session['user'] and comment.username == session['user']['username'] %}
         <form action="{{ url_for('remove_comment', comment_id=comment.comment_id) }}" method="POST" id="remove-comment-form">
             <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
             <input type="hidden" name="item_id" value="{{ item.item_id }}">
             <input type="hidden" name="comment" value="{{ comment.comment }}">
+            <input type="hidden" name="username" value="{{ comment.username }}">
             <button id="delete-button" type="submit">Delete</button>
         </form>
+        {% endif %}
 
-
+        {% if session['user'] and comment.username == session['user']['username'] %}
         <button id="update-button" class="update-button">Update</button>
         <div class="hidden-element" style="display: none;" id="update-form-container">
 
@@ -108,6 +154,7 @@ Single item result page
                 <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
                 <input type="hidden" name="item_id" value="{{ item.item_id }}">
                 <input type="hidden" name="comment" value="{{ comment.comment }}">
+                <input type="hidden" name="username" value="{{ comment.username }}">
                 <div class="form-group" id="new-comment-group">
                     <label class="pb-2 fs-4" for="new_comment" id="new-comment-label">Updated Comment:</label>
                     <textarea class="form-control" rows="5" id="new_comment" name="new_comment"></textarea>
@@ -115,6 +162,7 @@ Single item result page
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
+        {% endif %}
     </div>
 </div>
 

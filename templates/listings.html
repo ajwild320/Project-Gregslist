@@ -158,7 +158,7 @@ Home page
         <div class="my-item">
             <div class="my-item-info">
                 <h2>{{ item.item_name }}</h2>
-                <p>Price: ${{ item.price }}</p>
+                <p>Price: ${{ "%.2f" | format(item.price) }}</p>
                 <p>Condition: {{ item.condition }}</p>
             </div>
             <button><a id="itemlink" href="/items/{{ item.item_id }}">More Info</a></button>
