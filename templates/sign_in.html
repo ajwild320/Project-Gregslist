@@ -12,10 +12,10 @@ Home page
 {% block body %}
 
 <h1 style="padding-bottom: 1rem;" class="text-center text-light fs-1">Welcome back! Please sign in below.</h1>
-<div class="bg-light w-50 mx-auto p-3 mt-3 mb-5">
+<div class="bg-light w-50 mx-auto p-3 mt-3 mb-5" style="max-width: 100%;">
     <form method="post" action="/sign_in">
         <div class="px-4">
-            <div class="form-group">
+            <!-- <div class="form-group"> -->
             <div class="form-group">
                 <label for="formGroupExampleInput" class="mt-3 fs-3 fw-bold">Username:</label>
                 <input type="text" class="form-control mt-1" id="formGroupExampleInput" name="username" placeholder="Enter username:">
