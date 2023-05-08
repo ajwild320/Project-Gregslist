@@ -12,7 +12,7 @@ Home page
 
 {% block body %}
   <h1>Favorites List:</h1>
-  {% if favorites %}
+  <!-- {% if favorites %}
     <table>
       <thead>
         <tr>
@@ -34,6 +34,29 @@ Home page
         {% endfor %}
       </tbody>
     </table>
+  {% else %}
+    <p>Your favorites list is empty.</p>
+    <p>Add some favorites!</p>
+  {% endif %} -->
+  {% if favorites %}
+
+        {% for favorite in favorites %}
+
+        <div class="my-item-container">
+          <div class="my-item">
+              <div class="my-item-info">
+                  <p>Item id: {{ favorite.item_id}}</p>
+                  <p>Seller's Username: {{ favorite.username  }}</p>
+              </div>
+              <form action="{{ url_for('fav_list_delete_fav', item_id=favorite.item_id) }}" method="POST">
+                <button type="submit" class="btn btn-danger">Remove</button>
+              </form>
+              <button><a id="itemlink" href="/items/{{ favorite.item_id }}">More Info</a></button>
+              
+          </div>
+      </div>
+        {% endfor %}
+
   {% else %}
     <p>Your favorites list is empty.</p>
     <p>Add some favorites!</p>

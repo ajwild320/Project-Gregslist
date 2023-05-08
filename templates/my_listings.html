@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
+    <!-- <div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
     <table class="table">
     <thead>
         <tr>
@@ -37,5 +37,32 @@
         {% endfor %}
     </tbody>
     </table>
-    </div>
+    </div> -->
+
+
+    
+            {% for item in item %}
+            {% if username == item.username %}
+            <div class="item-info">
+                <!-- <h2>Seller: {{ item.username }}</h2> -->
+                <!-- <h2>Seller: {{ item.username }}</h2> -->
+                <div class="grid-container">
+                    <div><strong>Item:</strong></div>
+                    <div>{{ item.item_name }}</div>
+                    <div><strong>Description:</strong></div>
+                    <div>{{ item.description }}</div>
+                    <div><strong>Condition:</strong></div>
+                    <div>{{ item.condition }}</div>
+                    <div><strong>Price:</strong></div>
+                    <div><span class="price">${{ item.price }}</span></div>
+                </div>
+                <div class="buttons">
+                    <a href='/items/update/{{item.item_id}}' class="like-btn" role="button">Update</a>
+                    <a href='/items/delete/{{item.item_id}}' class="report-btn" role="button">Delete</a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
 {% endblock %}
+
+

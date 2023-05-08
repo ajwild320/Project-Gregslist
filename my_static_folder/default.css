@@ -38,6 +38,24 @@ body {
 .buttons {
     margin-top: 20px;
 }
+.buttons a {
+    margin-right: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.buttons a:hover {
+    opacity: 0.8;
+}
+.buttons a.btn {
+    display: inline-block;
+    vertical-align: top;
+}
 
 .buttons button {
     margin-right: 10px;
@@ -56,7 +74,14 @@ body {
     background-color: #f44336;
     color: white;
 }
-
+.update-btn{
+    background-color: #000;
+    color: white;
+}
+.deactivate-btn{
+    background-color: rgb(255, 81, 0);
+    color: white;
+}
 .interested-btn {
     background-color: #2196F3;
     color: white;
@@ -138,3 +163,275 @@ footer {
     background-color: #4CAF50;
 
 }
+
+/* 
+                .container {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 100vh;
+                  
+                }
+                .item {
+                  width: 95%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  border: 1px solid #ddd;
+                  padding: 10px;
+                  border-radius: 4px;
+                  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                }
+                .item-info {
+                  flex: 1;
+                  margin-right: 10px;
+                }
+                .item h2 {
+                  font-size: 24px;
+                  font-weight: bold;
+                  color: #333;
+                  margin-bottom: 5px;
+                }
+                .item p {
+                  color: #777;
+                  margin-bottom: 5px;
+                }
+                .item button {
+                  width: 120px;
+                  height: 50px;
+                  background-color: #4CAF50;
+                  color: white;
+                  padding: 10px 20px;
+                  border: none;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  transition: all 0.3s ease-in-out;
+                }
+                .item button:hover {
+                  background-color: #3e8e41;
+                }
+               */
+/* .item button {
+    width: 120px;
+    height: 50px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+} */
+#searchcenter{
+    margin: 0;
+    width: 60%;
+    margin: 0 auto;
+}
+.my-item-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    margin-left: 150px;
+    width: calc(100% - 150px);
+  }
+  .my-item {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .my-item-info {
+    flex: 1;
+    margin-right: 10px;
+  }
+  .my-item h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  .my-item p {
+    color: #777;
+    margin-bottom: 5px;
+  }
+  .my-item button {
+    width: 120px;
+    height: 50px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  .my-item button:hover {
+    background-color: #3e8e41;
+  }
+  a#itemlink:link, a#itemlink:visited {
+    color: white;
+    text-decoration: none;
+}
+
+#search-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+}
+
+#search-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#input-group {
+    width: 100%;
+}
+
+#name {
+    width: 100%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+#search-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#search-button:hover {
+    background-color: #45a049;
+}
+
+
+#profilegreeting{
+    font-size: 32px;
+
+}
+
+#comment-form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgb(168, 162, 162);
+}
+
+#comment-form {
+    width: 100%;
+}
+
+#update-comment-form {
+    width: 100%;
+}
+
+#comment-label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#comment {
+    width: 100%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+#submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#submit-button:hover {
+    background-color: #45a049;
+}
+
+
+#comment-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgb(168, 162, 162);
+    margin-bottom: 20px;
+}
+
+#username {
+    font-weight: bold;
+}
+
+#delete-button,
+#update-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#delete-button:hover,
+#update-button:hover {
+    background-color: #45a049;
+}
+
+#new-comment-label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#new_comment {
+    width: 100%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+#get-comments-form,
+#comment-content {
+    background-color: white;
+    padding: 10px;
+    width: 100%;
+    
+}
+#get-comments-form{
+    margin-bottom: 20px;
+    border-radius: 10px;
+
+}
+
+.btn-danger {
+    margin-right: 20px;
+  }

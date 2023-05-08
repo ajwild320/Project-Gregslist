@@ -69,76 +69,113 @@ Single item result page
     
 </div> -->
 
-<div class="rounded bg-secondary mx-auto w-75">
-    <div class="form-group p-3 row">
-        <div class="col">
-            <div class="position-relative justify-content-center">
-                <form action="{{ url_for('add_comment', item_id=item.item_id) }}" method="POST">
-                    <div class="m-0 col-8">
-                        <label class="pb-2 fs-4" for="comment">Comment:</label>
-                        <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
-                    </div>
-                    <br>
-                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-                </form>
-            </div>
+<div id="comment-form-container">
+    <form action="{{ url_for('add_comment', item_id=item.item_id) }}" method="POST" id="comment-form">
+        <div class="" id="comment-group">
+            <label class="" for="comment" id="comment-label">Comment:</label>
+            <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
         </div>
-    </div>
+        <br>
+        <button type="submit" id="submit-button">Submit</button>
+    </form>
 </div>
+
 <br>
 
 {% if comments %}
 {% for comment in comments %}
 
-<div class="rounded bg-light mx-auto w-75">
-    <div class="form-group p-3 row">
-        <div class="col">
-            <div class="position-relative justify-content-center">
-                <form action="{{ url_for('get_all_comments', item_id=item.item_id) }}" method="GET">
-                    <div class="m-0 col-8">
-                        <p class="pb-2 fs-4">{{ comment.username }} said:</p>
-                        <p>{{ comment.comment }}</p>
-                    </div>
-                </form>
-                <form action="{{ url_for('remove_comment', comment_id=comment.comment_id) }}" method="POST">
-                    <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
-                    <input type="hidden" name="item_id" value="{{ item.item_id }}">
-                    <input type="hidden" name="comment" value="{{ comment.comment }}">
-                    <button type="submit" class="btn btn-primary btn-lg">Delete</button>
-                </form>
-                <br>
-                <button class="update-button btn btn-primary btn-lg">Update</button>
-                <div class="hidden-element" style="display: none;">
-                    <form action="{{ url_for('update_comment', comment_id=comment.comment_id) }}" method="POST">
+<div class="position-relative justify-content-center" id="comment-container">
+    <form action="{{ url_for('get_all_comments', item_id=item.item_id) }}" method="GET" id="get-comments-form">
+        <div class="m-0 col-8" id="comment-content">
+            <p id="username">{{ comment.username }} commented:</p>
+            <p>{{ comment.comment }}</p>
+        </div>
+    </form>
+    <div class="button-container" id="button-container">
+        <form action="{{ url_for('remove_comment', comment_id=comment.comment_id) }}" method="POST" id="remove-comment-form">
+            <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
+            <input type="hidden" name="item_id" value="{{ item.item_id }}">
+            <input type="hidden" name="comment" value="{{ comment.comment }}">
+            <button id="delete-button" type="submit">Delete</button>
+        </form>
+
+
+        <button id="update-button" class="update-button">Update</button>
+        <div class="hidden-element" style="display: none;" id="update-form-container">
+
+            <form action="{{ url_for('update_comment', comment_id=comment.comment_id) }}" method="POST" id="update-comment-form">
+                <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
+                <input type="hidden" name="item_id" value="{{ item.item_id }}">
+                <input type="hidden" name="comment" value="{{ comment.comment }}">
+                <div class="form-group" id="new-comment-group">
+                    <label class="pb-2 fs-4" for="new_comment" id="new-comment-label">Updated Comment:</label>
+                    <textarea class="form-control" rows="5" id="new_comment" name="new_comment"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    <!-- <div id="comment-container">
+        <div id="comment-form" class="form-group row">
+            <div class="col">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="rounded bg-light mx-auto w-75">
+        <div class="form-group p-3 row">
+            <div class="col">
+                <div class="position-relative justify-content-center">
+                    <form action="{{ url_for('get_all_comments', item_id=item.item_id) }}" method="GET">
+                        <div class="m-0 col-8">
+                            <p class="pb-2 fs-4">{{ comment.username }} said:</p>
+                            <p>{{ comment.comment }}</p>
+                        </div>
+                    </form>
+                    <form action="{{ url_for('remove_comment', comment_id=comment.comment_id) }}" method="POST">
                         <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
                         <input type="hidden" name="item_id" value="{{ item.item_id }}">
                         <input type="hidden" name="comment" value="{{ comment.comment }}">
-                        <div class="form-group">
-                            <label class="pb-2 fs-4" for="new_comment">Updated Comment:</label>
-                            <textarea class="form-control" rows="5" id="new_comment" name="new_comment"></textarea>
-                        </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-lg">Delete</button>
                     </form>
+                    <br>
+                    <button class="update-button btn btn-primary btn-lg">Update</button>
+                    <div class="hidden-element" style="display: none;">
+                        <form action="{{ url_for('update_comment', comment_id=comment.comment_id) }}" method="POST">
+                            <input type="hidden" name="comment_id" value="{{ comment.comment_id }}">
+                            <input type="hidden" name="item_id" value="{{ item.item_id }}">
+                            <input type="hidden" name="comment" value="{{ comment.comment }}">
+                            <div class="form-group">
+                                <label class="pb-2 fs-4" for="new_comment">Updated Comment:</label>
+                                <textarea class="form-control" rows="5" id="new_comment" name="new_comment"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<br>
+    <br> -->
 
-{% endfor %}
-{% endif %}
+    {% endfor %}
+    {% endif %}
 
-<script>
-    const updateButtons = document.querySelectorAll('.update-button');
+    <script>
+        const updateButtons = document.querySelectorAll('.update-button');
 
-        updateButtons.forEach(function(updateButton) {
-        const hiddenElement = updateButton.nextElementSibling;
+        updateButtons.forEach(function (updateButton) {
+            const hiddenElement = updateButton.nextElementSibling;
 
-        updateButton.addEventListener('click', function() {
-            hiddenElement.style.display = 'block';
+            updateButton.addEventListener('click', function () {
+                hiddenElement.style.display = 'block';
+            });
         });
-    });
-</script>
+    </script>
 
-{% endblock %}
+    {% endblock %}
