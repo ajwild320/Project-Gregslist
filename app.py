@@ -159,7 +159,7 @@ def report_post_email(item_id):
     except:
         return redirect('/report_post/{}'.format(item_id))
 
-@app.get('/items/<int:item_id>')
+@app.get('/single_item/<int:item_id>')
 def get_single_item(item_id):
     single_item = item_repository_singleton.get_item_by_id(item_id)
     return render_template('single_item.html', item=single_item)
@@ -451,7 +451,7 @@ def fav_list_delete_fav(item_id):
 
 # get all comments for a single item
 # possible change: /items/<int:item_id> <-------> old: /single_item/<int:item_id>
-@app.get('/single_item/<int:item_id>')
+@app.get('/items/<int:item_id>')
 def get_all_comments(item_id):
     single_item = item_repository_singleton.get_item_by_id(item_id)
     comments = comments_repository_singleton.get_all_comments_by_item_id(single_item.item_id)
@@ -459,7 +459,7 @@ def get_all_comments(item_id):
     return render_template('single_item.html', item=single_item, comments=comments)
 
 # user adds comment to a single item's comments list
-@app.post('/single_item/<int:item_id>')
+@app.post('/items/<int:item_id>')
 def add_comment(item_id):
     user = session['user']
     username = user.get('username')
@@ -476,6 +476,13 @@ def add_comment(item_id):
 @app.post('/single_item/delete/<int:comment_id>')
 def remove_comment(comment_id):
     comment_id = request.form.get('comment_id')
+
+    user = session['user']
+    session_username = user.get('username')
+    comment_author = request.form.get('username')
+
+    if session_username != comment_author:
+        return "you are not the author of this comment"
     
     comments_repository_singleton.delete_comment(comment_id)
     return redirect(request.referrer)
@@ -486,5 +493,12 @@ def update_comment(comment_id):
     comment = request.form.get('new_comment')
     comment_id = request.form.get('comment_id')
 
+    user = session['user']
+    session_username = user.get('username')
+    comment_author = request.form.get('username')
+
+    if session_username != comment_author:
+        return "you are not the author of this comment"
+        
     comments_repository_singleton.update_comment(comment_id, comment)
     return redirect(request.referrer)
