@@ -182,6 +182,8 @@ def create_item():
 def my_items(username):
     user = session['user']
     username = user.get('username')
+    if(username != user["username"]):
+        return redirect("/my_account")
     user_item = item_repository_singleton.get_all_items()
     return render_template('my_listings.html', item=user_item, username=username)
 
@@ -189,6 +191,9 @@ def my_items(username):
 def delete_item_form(item_id):
     try:
         user = session['user']
+        curr_item = item_repository_singleton.get_item_by_id(item_id)
+        if(curr_item.username != user["username"]):
+            return redirect("/my_account")
         user_item = item_repository_singleton.get_item_by_id(item_id)
         return render_template('delete_item.html', user=user, item=user_item)
     except:
@@ -206,6 +211,10 @@ def delete_item(item_id):
 @app.get('/items/update/<int:item_id>')
 def update_item_form(item_id):
     user = session['user']
+
+    curr_item = item_repository_singleton.get_item_by_id(item_id)
+    if(curr_item.username != user["username"]):
+        return redirect("/my_account")
     user_item = item_repository_singleton.get_item_by_id(item_id)
     return render_template('update_item.html', user=user, item=user_item)
 
@@ -339,7 +348,7 @@ def signup_form():
         return redirect("/signup")
 
     new_pass = bcrypt.generate_password_hash(new_pass).decode()
-
+    print("HERE")
     #checks to make sure user does not already exist.
     existing_user = users.query.filter_by(username = new_user).first()
     if existing_user:
