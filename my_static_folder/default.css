@@ -130,20 +130,16 @@ form {
 }
 
 .side-bar {
-    /* position: fixed; */
     position: absolute;
     top: 280px;
     left: 0;
     width: 200px;
     bottom: 50px;
-    /* Height of the footer */
-    /* background-color: #f1f1f1; */
     background-color: #f1f1f1;
 }
 
 #margintest {
     margin-left: 150px;
-    /* margin-right: 5%; */
     width: calc(100% - 130px);
 }
 
@@ -159,69 +155,10 @@ footer {
     bottom: 0;
     width: 100%;
     height: 100px;
-    /* Set the fixed height of the footer here */
     background-color: #4CAF50;
 
 }
 
-/* 
-                .container {
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  height: 100vh;
-                  
-                }
-                .item {
-                  width: 95%;
-                  display: flex;
-                  align-items: center;
-                  justify-content: space-between;
-                  border: 1px solid #ddd;
-                  padding: 10px;
-                  border-radius: 4px;
-                  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                }
-                .item-info {
-                  flex: 1;
-                  margin-right: 10px;
-                }
-                .item h2 {
-                  font-size: 24px;
-                  font-weight: bold;
-                  color: #333;
-                  margin-bottom: 5px;
-                }
-                .item p {
-                  color: #777;
-                  margin-bottom: 5px;
-                }
-                .item button {
-                  width: 120px;
-                  height: 50px;
-                  background-color: #4CAF50;
-                  color: white;
-                  padding: 10px 20px;
-                  border: none;
-                  border-radius: 4px;
-                  cursor: pointer;
-                  transition: all 0.3s ease-in-out;
-                }
-                .item button:hover {
-                  background-color: #3e8e41;
-                }
-               */
-/* .item button {
-    width: 120px;
-    height: 50px;
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-} */
 #searchcenter{
     margin: 0;
     width: 60%;

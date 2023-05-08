@@ -20,43 +20,9 @@
         </div>
     </form>
 </div>
-<!-- <div>
-    <h3>Search by Name:</h1>
-    <form action="/items/search" method="get"> 
-        <div class="input-group">
-            <input type="text" name="name" id="name" class="form-control" required=True>
-            <div class>
-                <button type="submit" >Search</button>
-            </div>
-        </div>
-    </form>
-</div> -->
 
     {% if search_query != '' %}
     {% if item|length != 0 %}
-    <!-- <div class="my-item-container" id="searchcenter">
-        <div class="my-item">
-            <div class="my-item-info">
-                <h2>Item Name</h2>
-                <p>Price: $50</p>
-                <p>Condition: New</p>
-            </div>
-            <button>More Info</button>
-        </div>
-    </div> -->
-    
-    <!-- <h2>{{item|length}}</h2> -->
-    <!-- <div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
-    <table class="table">
-    <thead>
-        <tr>
-        <th>Item</th>
-        <th>Price</th>
-        <th>Description</th>
-        <th>Condition</th>
-        </tr>
-    </thead>
-    <tbody> -->
         {% for item in item %}
         <div class="my-item-container" id="searchcenter">
             <div class="my-item">
@@ -68,12 +34,7 @@
                 <button><a id="itemlink"href="/items/{{ item.item_id }}">More Info</a></button>
             </div>
         </div>
-        <!-- <tr>
-            <td><a href="/items/{{ item.item_id }}">{{ item.item_name }}</a></td>
-            <td>${{ item.price }}</td>
-            <td>{{ item.description }}</td>
-            <td>{{ item.condition }}</td>
-        </tr> -->
+
         {% endfor %}
     </tbody>
     </table>
