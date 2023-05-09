@@ -13,14 +13,23 @@ Home page
 {% block body %}
   <h1>Favorites List:</h1>
   {% if favorites %}
-
         {% for favorite in favorites %}
-
         <div class="my-item-container">
           <div class="my-item">
               <div class="my-item-info">
-                  <p>Item id: {{ favorite.item_id}}</p>
-                  <p>Seller's Username: {{ favorite.username  }}</p>
+                {% set item_id = favorite.item_id %}
+                {% for item in items %}
+                {% if item.item_id == item_id %}
+                  <p>Item Name: {{ item.item_name }}</p>
+                {% endif %}
+                {% endfor %}
+
+                {% set item_id = favorite.item_id %}
+                {% for item in items %}
+                {% if item.item_id == item_id %}
+                  <p>Seller's Username: {{ item.username }}</p>
+                {% endif %}
+                {% endfor %}
               </div>
               <form action="{{ url_for('fav_list_delete_fav', item_id=favorite.item_id) }}" method="POST">
                 <button type="submit" class="btn btn-danger">Remove</button>
@@ -29,8 +38,8 @@ Home page
               
           </div>
       </div>
+      <br>
         {% endfor %}
-
   {% else %}
     <p>Your favorites list is empty.</p>
     <p>Add some favorites!</p>

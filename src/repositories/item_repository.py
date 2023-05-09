@@ -6,6 +6,10 @@ class ItemRepository:
     def get_all_items(self):
         all_items = Item.query.all()
         return all_items
+    
+    def get_items_by_username(self, username):
+        all_items = Item.query.filter_by(username=username).all()
+        return all_items
 
     #Gets an item from the DB using the item's ID number
     def get_item_by_id(self, item_id):
