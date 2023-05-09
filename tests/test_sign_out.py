@@ -29,6 +29,6 @@ def test_sign_out(test_app):
     response = test_app.get("/log_out", follow_redirects = True)
     assert response.status_code == 200
     data = response.data.decode('utf-8')
-    assert "Our Products" in data
+    assert "Welcome to Gregslist!" in data
     
 

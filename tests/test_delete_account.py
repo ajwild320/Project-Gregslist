@@ -34,3 +34,9 @@ def test_delete_account(test_app):
     assert "Robert" in data
     assert "bob@gmail.com" in data
     assert "user56789" in data
+    
+    response = test_app.post('/deactivate_account', data = {
+        'answer' : 'Yes'
+    }, follow_redirects = True)
+
+    assert response.status_code == 200
