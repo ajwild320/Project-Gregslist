@@ -413,12 +413,14 @@ def user_create_listing_page():
         return render_template('sign_in.html')    
 
 # show favorites list page
-@app.get('/favorites_list_fav')    
+@app.get('/favorites_list_fav')
 def fav_list():
     user = session['user']
     username = user.get('username')
     favorites = favorites_repository_singleton.get_all_favorites(username)  # get the list of favorites for the current user
-    return render_template('favorites_list_fav.html', favorites=favorites)
+    items = item_repository_singleton.get_all_items()      # get the list of all items
+
+    return render_template('favorites_list_fav.html', favorites=favorites, items=items)
     
 # add favorite to favorites list based on user session and item id of currently selected item
 @app.post('/favorites_list_fav/<int:item_id>')
