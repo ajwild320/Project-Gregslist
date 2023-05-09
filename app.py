@@ -123,7 +123,7 @@ def deactivate():
     answer = str(request.form.get('answer'))
     if answer == 'Yes':
         user = session['user']
-        print("HERE")
+        
         username = user.get('username')
         user_repository_singleton.delete_user(username)
         del session['user']
@@ -159,14 +159,11 @@ def report_post_email(item_id):
     except:
         return redirect('/report_post/{}'.format(item_id))
 
-@app.get('/single_item/<int:item_id>')
-def get_single_item(item_id):
-    single_item = item_repository_singleton.get_item_by_id(item_id)
-    return render_template('single_item.html', item=single_item)
-
 @app.post('/items')
 def create_item():
     user = session['user']
+    if 'user' not in session:
+        return redirect('/sign_in')
     seller = user.get('username')
     item_name = request.form.get('item_name').title()
     price = request.form.get('price', type = float)
@@ -181,7 +178,10 @@ def create_item():
 @app.get('/items/my_items/<username>')
 def my_items(username):
     user = session['user']
+    if 'user' not in session:
+        return redirect('/sign_in')
     username = user.get('username')
+    #ensures only correct user can access
     if(username != user["username"]):
         return redirect("/my_account")
     user_item = item_repository_singleton.get_all_items()
@@ -190,7 +190,10 @@ def my_items(username):
 @app.get('/items/delete/<int:item_id>')
 def delete_item_form(item_id):
     try:
+        #ensures only correct user can access
         user = session['user']
+        if not user:
+            return redirect("/")
         curr_item = item_repository_singleton.get_item_by_id(item_id)
         if(curr_item.username != user["username"]):
             return redirect("/my_account")
@@ -211,7 +214,9 @@ def delete_item(item_id):
 @app.get('/items/update/<int:item_id>')
 def update_item_form(item_id):
     user = session['user']
-
+    #ensures only correct user can access
+    if 'user' not in session:
+        return redirect('/sign_in')
     curr_item = item_repository_singleton.get_item_by_id(item_id)
     if(curr_item.username != user["username"]):
         return redirect("/my_account")
@@ -262,6 +267,8 @@ def update_item(item_id):
 @app.get('/item/interested/<int:item_id>')
 def interested_form(item_id):
     user = session['user']
+    if 'user' not in session:
+        return redirect('/sign_in')
     interested_item = item_repository_singleton.get_item_by_id(item_id)
     return render_template('interested.html' ,user=user, item=interested_item)
 
@@ -348,7 +355,7 @@ def signup_form():
         return redirect("/signup")
 
     new_pass = bcrypt.generate_password_hash(new_pass).decode()
-    print("HERE")
+    
     #checks to make sure user does not already exist.
     existing_user = users.query.filter_by(username = new_user).first()
     if existing_user:
@@ -455,7 +462,12 @@ def fav_list_delete_fav(item_id):
 # possible change: /items/<int:item_id> <-------> old: /single_item/<int:item_id>
 @app.get('/items/<int:item_id>')
 def get_all_comments(item_id):
+    if 'user' not in session:
+        return redirect('/sign_in')
+    user = session['user']
     single_item = item_repository_singleton.get_item_by_id(item_id)
+    if not single_item:
+        return redirect("/")
     comments = comments_repository_singleton.get_all_comments_by_item_id(single_item.item_id)
 
     return render_template('single_item.html', item=single_item, comments=comments)
