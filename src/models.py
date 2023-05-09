@@ -16,7 +16,7 @@ class Item(db.Model):
         self.price = price
         self.category = category
         self.description = description
-        self. condition = condition
+        self.condition = condition
         self.username = username
 
     def __repr__(self) -> str:

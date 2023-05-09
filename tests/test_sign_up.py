@@ -1,5 +1,5 @@
 
-from  app import app
+from app import app
 def test_sign_up(test_app):
     #Testing path where user enters their sign in info, then deletes account. Ensures happy path functionality of creating account.
     response = test_app.post('/signup', data={
