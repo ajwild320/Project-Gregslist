@@ -10,7 +10,7 @@ Single item result page
 
 {% block body %}
 
-<div class="item-info">
+<div class="item-info rounded">
     <h2>Seller: {{ item.username }}</h2>
     <!-- <h2>Seller: {{ item.username }}</h2> -->
     <div class="grid-container">
@@ -71,7 +71,7 @@ Single item result page
     
 </div> -->
 
-<div id="comment-form-container">
+<div id="comment-form-container" class="rounded">
     <form action="{{ url_for('add_comment', item_id=item.item_id) }}" method="POST" id="comment-form">
         <div class="" id="comment-group">
             <label class="" for="comment" id="comment-label">Comment:</label>
@@ -128,7 +128,7 @@ Single item result page
     </div>
 </div> -->
 <br>
-<div class="position-relative justify-content-center" id="comment-container">
+<div class="position-relative justify-content-center rounded" id="comment-container">
     <form action="{{ url_for('get_all_comments', item_id=item.item_id) }}" method="GET" id="get-comments-form">
         <div class="m-0 col-8" id="comment-content">
             <p id="username">{{ comment.username }} commented:</p>

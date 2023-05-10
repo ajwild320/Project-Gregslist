@@ -11,7 +11,7 @@ My Account Page
 {% block body %}
 
 
-<div class="item-info">
+<div class="item-info rounded">
     <h2 id="profilegreeting">Good {{time_of_day}} {{user["first_name"]}}!</h2>
     <div class="grid-container">
         <div><strong>First Name:</strong></div>
@@ -27,8 +27,8 @@ My Account Page
         <a href="/favorites_list_fav" class="report-btn" role="button">My Favorites</a>
         <a href="/items/my_items/{{user.username}}" class="interested-btn">My Listings</a>
         <a href="/update_account" class="update-btn" role="button">Update Account</a>
-        <a href="/deactivate_account" class="deactivate-btn" role="button">Deactivate </a>
-        
+        <a href="/deactivate_account" class="deactivate-btn" role="button">Deactivate</a>
+        <a href="/log_out" class="btn btn-warning text-light" role="button">Log Out</a>
     </div>
 </div>
 <!-- <h1 class="text-center fw-bold pb-3">Good {{time_of_day}} {{user["first_name"]}}!</h1>
