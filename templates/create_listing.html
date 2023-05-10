@@ -11,8 +11,8 @@ Home page
 
 {% block body %}
 
-<h1 class="text-center text-light fs-1">Post your listing</h1>
-<div class="w-75 mx-auto p-3 mt-3 mb-5 bg-warning">
+<h1 class="text-center fs-1" style="padding-bottom: 10px;">Post your listing</h1>
+<div class="w-75 mx-auto p-3 mt-3 mb-5 bg-warning rounded">
     <form method="post" action="/items">
         <div class="form-group">
             <label for="formGroupExampleInput" class="mt-2 fs-3 fw-bold">Please enter the name of what you are
@@ -132,8 +132,10 @@ Home page
 
 
 
-        <div class="text-left"><button type="submit" class="btn btn-lg btn-primary mt-5 mb-4" id="button">Post
-                Listing</button></div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-lg btn-primary mt-5 mb-4" id="button">Post
+                Listing</button>
+        </div>
     </form>
 </div>
 {% endblock %}

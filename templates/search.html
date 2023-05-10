@@ -9,12 +9,12 @@
 {% endblock %}
 
 {% block body %}
-<div id="search-container">
+<div id="search-container" class="rounded">
     <h3 id="search-title">Search by Name:</h3>
     <form action="/items/search" method="get" id="search-form"> 
         <div class="input-group" id="input-group">
             <input type="text" name="name" id="name" class="form-control" required=True>
-            <div class>
+            <div id="input_me">
                 <button type="submit" id="search-button">Search</button>
             </div>
         </div>

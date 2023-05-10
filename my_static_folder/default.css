@@ -117,15 +117,12 @@ form {
 }
 
 #navhead {
-    max-height: calc(100% - 100px);
-    position: fixed;
-    top: 280px;
-    left: 0;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    background-color: #f1f1f1;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
 
 }
 
@@ -139,9 +136,23 @@ form {
 }
 
 #margintest {
-    margin-left: 150px;
-    width: calc(100% - 130px);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
 }
+
+#navcustom {
+    background-color: #f8f9fa;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+  }
 
 #listingstable {
     margin-left: 98px;
@@ -239,6 +250,11 @@ footer {
 
 #input-group {
     width: 100%;
+    display: flex;
+    justify-content: center;
+}
+#input_me {
+    padding-top: 10px;
 }
 
 #name {
