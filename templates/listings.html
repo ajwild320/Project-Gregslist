@@ -9,67 +9,65 @@ Home page
 {% endblock %}
 
 {% block body %}
-<h1 id="margintest">Listing page</h1>
-<div class="side-bar"></div>
-<div class="row">
-    <nav>
-
-        <div>
-            <ul id="navhead">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/listings/tools">Tools</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/listings/auto">Auto</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/listings/fashion">Fashion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/listings/electronics">Electronics</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/listings/toys">Toys</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/listings/beauty">Beauty</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/listings/hygiene">Hygiene</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/listings/household">Household</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/listings/misc">Misc</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    
-
-
-    {% if items|length != 0 %}
-
-    {% for item in items %}
-    <div class="my-item-container" style="margin-bottom: 20px;">
-        <div class="my-item">
-            <div class="my-item-info">
-                <h2>{{ item.item_name }}</h2>
-                <p>Price: ${{ "%.2f" | format(item.price) }}</p>
-                <p>Condition: {{ item.condition }}</p>
+<div class="container-fluid d-grid gap-3" style="min-height:100vh; padding-right: 200px; background-color: rgba(85, 169, 230, 1);">
+    <div class="row justify-content-center">
+        <div class="col-md-3 d-flex justify-content-center">
+            <div class="side-bar rounded">
+                <ul class="list-group">
+                    <div class="text-center rounded">
+                        <li class="list-group-item active" style="background-color:#4CAF50;">Categories</li>
+                        <li class="list-group-item"><a href="/listings/tools" class="text-decoration-none text-dark">Tools</a></li>
+                        <li class="list-group-item"><a href="/listings/auto" class="text-decoration-none text-dark">Auto</a></li>
+                        <li class="list-group-item"><a href="/listings/fashion" class="text-decoration-none text-dark">Fashion</a></li>
+                        <li class="list-group-item"><a href="/listings/electronics" class="text-decoration-none text-dark">Electronics</a></li>
+                        <li class="list-group-item"><a href="/listings/toys" class="text-decoration-none text-dark">Toys</a></li>
+                        <li class="list-group-item"><a href="/listings/beauty" class="text-decoration-none text-dark">Beauty</a></li>
+                        <li class="list-group-item"><a href="/listings/hygiene" class="text-decoration-none text-dark">Hygiene</a></li>
+                        <li class="list-group-item"><a href="/listings/household" class="text-decoration-none text-dark">Household</a></li>
+                        <li class="list-group-item"><a href="/listings/misc" class="text-decoration-none text-dark">Misc</a></li>
+                    </div>
+                </ul>
             </div>
-            <button><a id="itemlink" href="/items/{{ item.item_id }}">More Info</a></button>
+        </div>
+        <div class="col-md-9">
+            <h1 class="text-center" style="padding-bottom: 20px; padding-left: 90px;">Listing page</h1>
+            <div class="row justify-content-center">
+                {% if items|length != 0 %}
+                {% for item in items %}
+                <div class="my-item-container col-md-6 col-lg-4" style="padding-bottom: 20px;">
+                    <div class="my-item">
+                        <div class="my-item-info">
+                            <h2>{{ item.item_name }}</h2>
+                            <p>Price: ${{ "%.2f" | format(item.price) }}</p>
+                            <p>Condition: {{ item.condition }}</p>
+                        </div>
+                        <button><a id="itemlink" href="/items/{{ item.item_id }}">More Info</a></button>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </div>
-    {% endfor %}
-
-    {% endif %}
 </div>
 
-
-
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <p>© 2023 Gregslist. All rights reserved.</p>
+                <p style="margin: 10px 0;" class="text-center" id="contact_link1"></p>
+                <script>
+                    if (!(window.location.toString().includes('contact_us'))) {
+                      document.getElementById("contact_link1").innerHTML = "<a href='/contact_us'>Click here to contact us!</a>";
+                    }
+                    else {
+                      document.getElementById("contact_link1").style.display = "none";
+                    }
+                  </script>
+            </div>
+        </div>
+    </div>
+</footer>
 
 {% endblock %}

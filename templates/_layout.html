@@ -18,7 +18,7 @@
 <body>
   {% block content %} {% endblock %}
 
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark mx-3">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark mx-3 rounded">
     <a style="font-weight: 700;" class="navbar-brand mx-3" href="/">Gregslist</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,38 +28,26 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="/listings">Listings</a>
+          <a class="nav-link rounded" href="/listings">Listings</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/items/search">Search for Items</a>
+          <a class="nav-link rounded" href="/items/search">Search for Items</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/my_account">My Account</a>
+          <a class="nav-link rounded" href="/my_account">My Account</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/signup">New User</a>
+          <a class="nav-link rounded" href="/signup">New User</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/sign_in">Sign In</a>
+          <a class="nav-link rounded" href="/sign_in">Sign In</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/create_listing">Create Listing</a>
+          <a class="nav-link rounded" href="/create_listing">Create Listing</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/contact_us">Contact Us</a>
+          <a class="nav-link rounded" href="/contact_us">Contact Us</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/log_out">Log Out</a>
-        </li>
-
-
-
-        <!-- DELETE, ONLY TO TEST PATH FUNCTIONALITY UNTIL SIGN IN FUNCTIONS ARE DEVELOPED-->
-        <li class="nav-item">
-          <a class="nav-link" href="/update_account">Update Account INVALID</a> <!--Now a button on my account page-->
-        </li>
-        <!-- DONT FORGET TO DELETE-->
-
       </ul>
     </div>
   </nav>

@@ -9,5 +9,33 @@
 {% endblock %}
 
 {% block body %}
-    <h1 style="margin-left: -4rem; padding-top: 1rem; padding-bottom: 1rem; font-size: 50px;">Welcome to Gregslist!</h1>
-    {% endblock %}
+<h1 style="text-align: center; padding-bottom: 20px;">Welcome to Gregslist!</h1>
+
+<div class="d-flex justify-content-center" style="width: 100%; height: auto;">
+    <img src="https://c4.wallpaperflare.com/wallpaper/592/361/216/penguin-pictures-for-large-desktop-wallpaper-preview.jpg" alt="Gregslist Logo">
+</div>
+
+<div class="d-flex justify-content-center" style="padding-top: 30px; margin-left: 6rem; margin-right: 6rem;">
+    <p style="font-size: large; font-weight: 600; font-family:Arial, Helvetica, sans-serif; text-align: center;">
+        Hello there! Welcome to gregslist, your one stop spot for posting items for sale! 
+        Here you can post your items for sale and communicate with potential buyers, or you 
+        can search for items you are interested in purchasing and get in touch with the seller
+        to arrange a potential meetup. We here at gregslist hope you enjoy our site! Have fun 
+        browsing!
+    </p>
+</div>
+
+    <div>
+        <div class="buttons">
+            <p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 20px; font-weight: bold;">If you already have a profile with us!</p>
+            <div class="d-flex justify-content-center" style="padding-bottom: 10px;">
+                <a href="/sign_in" class="btn btn-dark text-light" role="button">Sign in!</a>
+            </div>
+            <p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 20px; font-weight: bold;">If you are new to the site!</p>
+            <div class="d-flex justify-content-center">
+                <a href="/signup" class="btn btn-dark text-light" role="button">Sign up!</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
