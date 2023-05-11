@@ -25,8 +25,8 @@ class ItemRepository:
 
     #Gets all items matching a variety of substrings
     def search_items_name(self, item_name):
-        item = Item.query.filter(Item.item_name.ilike(item_name)).all()
-        return item
+        items = Item.query.filter(Item.item_name.ilike('%{}%'.format(item_name))).all()
+        return items
     
     def search_items_category(self,category):
         item = Item.query.filter(Item.category.ilike(category)).all()
