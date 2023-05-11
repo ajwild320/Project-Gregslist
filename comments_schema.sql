@@ -5,5 +5,5 @@ CREATE TABLE comments (
     comment_id SERIAL NOT NULL UNIQUE,
     PRIMARY KEY (comment_id),
     FOREIGN KEY(item_id) REFERENCES item(item_id) ON DELETE CASCADE,
-    FOREIGN KEY(username) REFERENCES users(username) ON DELETE CASCADE
+    FOREIGN KEY(username) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
