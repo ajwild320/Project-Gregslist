@@ -7,5 +7,5 @@ CREATE TABLE item(
     description VARCHAR(255) NOT NULL,
     condition VARCHAR(255) NOT NULL,
     PRIMARY KEY (item_id),
-    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
+    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
