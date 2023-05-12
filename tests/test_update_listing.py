@@ -1,5 +1,6 @@
 from app import app
 from src.repositories.item_repository import item_repository_singleton
+
 def test_update_listing(test_app):
     with app.app_context():
 
