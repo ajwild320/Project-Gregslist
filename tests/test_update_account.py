@@ -64,7 +64,7 @@ def test_update_account(test_app):
     response = test_app.post('/update_account', data={
         'email' :"newbob@gmail.com",
         'username' : "user56789",
-        'user_pass' : "new1123456789"
+        'user_pass' : "new1123456789",
     }, follow_redirects=True)
     assert response.status_code == 200
     data = response.data.decode('utf-8')

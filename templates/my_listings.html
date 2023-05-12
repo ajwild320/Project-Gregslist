@@ -9,43 +9,14 @@
 {% endblock %}
 
 {% block body %}
-    <!-- <div class="bg-light w-150 mx-auto p-3 mt-3 mb-5">
-    <table class="table">
-    <thead>
-        <tr>
-        <th>Item</th>
-        <th>Price</th>
-        <th>Description</th>
-        <th>Condition</th>
-        <th>Update</th>
-        <th>Delete</th>
-
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in item %}
-        {% if username == item.username %}
-        <tr>
-            <td>{{ item.item_name }}</td>
-            <td>${{ item.price }}</td>
-            <td>{{ item.description }}</td>
-            <td>{{ item.condition }}</td>
-            <td><a href='/items/update/{{item.item_id}}'>Update</a></td>
-            <td><a href='/items/delete/{{item.item_id}}'>Delete</a></td>
-        </tr>
-        {% endif %}
-        {% endfor %}
-    </tbody>
-    </table>
-    </div> -->
+    
 
 
     
             {% for item in item %}
             {% if username == item.username %}
             <div class="item-info rounded">
-                <!-- <h2>Seller: {{ item.username }}</h2> -->
-                <!-- <h2>Seller: {{ item.username }}</h2> -->
+
                 <div class="grid-container">
                     <div><strong>Item:</strong></div>
                     <div>{{ item.item_name }}</div>

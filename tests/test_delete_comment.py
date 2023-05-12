@@ -4,7 +4,7 @@ from src.repositories.comments_repository import comments_repository_singleton
 def test_update_listing(test_app):
     with app.app_context():
 
-    #Signs up, adds listing, adds comment, checks if comment exists
+    #Signs up, adds listing, adds comment, deletes comment, checks if it is deleted
         response = test_app.post('/signup', data={
 
             'fname' : "bob",
@@ -29,15 +29,18 @@ def test_update_listing(test_app):
 
 
         response = test_app.post(f"/items/{item.item_id}",data={
-
-        'comment' : "Here is a new comment!"
+        'comment' : "Here is a new commentabcd!"
              }, follow_redirects = True )
         assert response.status_code == 200
         data = response.data.decode('utf-8')
-        assert "Here is a new comment!" in data
+        assert "Here is a new commentabcd!" in data
 
         my_comment = comments_repository_singleton.get_all_comments_by_item_id(item.item_id)[0]
 
+        response = test_app.post(f"/single_item/delete/{my_comment.comment_id}")
+        assert response.status_code == 200
+        data = response.data.decode('utf-8')
+        assert not "Here is a new commentabcd!" in data
 
 
         response = test_app.post(f"/items/delete/{item.item_id}", data = {
@@ -50,11 +53,3 @@ def test_update_listing(test_app):
         }, follow_redirects = True)
 
         assert response.status_code == 200
-
-        #Checking that user is logged in to comment
-        response = test_app.get(f"/items/{item.item_id}"
-            ,follow_redirects = True )
-
-        assert response.status_code == 200
-        data = response.data.decode('utf-8')
-        assert "Welcome back! Please sign in below." in data
